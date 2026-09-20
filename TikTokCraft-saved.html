@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Review Dashboard | TikTok Production</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        bg: '#0F0F0F',
+                        card: 'rgba(255, 255, 255, 0.03)',
+                        neonPink: '#FE2C55',
+                        neonCyan: '#25F4EE',
+                        borderSubtle: 'rgba(255, 255, 255, 0.1)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0F0F0F; color: #E5E5E5; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .timeline-line::before { content: ''; position: absolute; left: 19px; top: 0; bottom: 0; width: 2px; background: rgba(37, 244, 238, 0.3); z-index: 0; }
+        .accent-border { border-left: 4px solid #FE2C55; }
+        .row-hover:hover { background: rgba(255, 255, 255, 0.06); }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <main class="max-w-6xl mx-auto space-y-12">
+        <!-- Header -->
+        <header class="space-y-6">
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tighter text-white">
+                ¡Encontramos los <span class="text-neonPink">Tacos</span> dónde grabó la <span class="text-neonCyan">Cachirula</span>!
+            </h1>
+            
+            <div class="flex flex-wrap gap-4">
+                <div class="glass p-4 rounded-xl flex-1 min-w-[280px]">
+                    <h3 class="text-neonCyan text-xs uppercase font-bold tracking-widest mb-1">Contexto</h3>
+                    <p class="text-sm opacity-80">La cantante Cachirula grabó su videoclip en una taquería de CDMX. Oportunidad de review para atraer seguidores.</p>
+                </div>
+                <div class="glass p-4 rounded-xl flex-1 min-w-[280px]">
+                    <h3 class="text-neonPink text-xs uppercase font-bold tracking-widest mb-1">Público Objetivo</h3>
+                    <p class="text-sm opacity-80">Jóvenes y adultos jóvenes (Clase C- y D+) en México.</p>
+                </div>
+                <div class="glass p-4 rounded-xl flex-1 min-w-[280px]">
+                    <h3 class="text-white text-xs uppercase font-bold tracking-widest mb-1">POV</h3>
+                    <p class="text-sm opacity-80">Lugar temático, carne de calidad, buen ambiente, pero precios elevados y cuenta costosa.</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Section 1: Vertebral Column -->
+        <section>
+            <h2 class="text-2xl font-bold mb-8 text-white">Guía Rítmica (Roadmap)</h2>
+            <div class="relative pl-12 timeline-line space-y-8">
+                <!-- Rhythm Cards -->
+                <div class="relative">
+                    <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-neonPink flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(254,44,85,0.5)]">01</div>
+                    <div class="glass p-6 rounded-2xl">
+                        <h4 class="font-bold text-lg text-neonCyan">0 - 5 seg: El Gancho</h4>
+                        <p class="text-sm opacity-70">Impacto visual inmediato. Comparación rápida entre video musical y realidad. Ritmo frenético.</p>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-neonCyan flex items-center justify-center font-bold text-bg shadow-[0_0_15px_rgba(37,244,238,0.5)]">02</div>
+                    <div class="glass p-6 rounded-2xl">
+                        <h4 class="font-bold text-lg text-white">5 - 15 seg: El Ambiente</h4>
+                        <p class="text-sm opacity-70">Recorrido dinámico. Enfoque en decoración norteña y frases en paredes para identificación.</p>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-white flex items-center justify-center font-bold text-bg">03</div>
+                    <div class="glass p-6 rounded-2xl">
+                        <h4 class="font-bold text-lg text-white">15 - 35 seg: Comida y Bebida</h4>
+                        <p class="text-sm opacity-70">Food porn. Carne, barra de aguas y licuachelas. Ritmo constante.</p>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-white flex items-center justify-center font-bold text-bg">04</div>
+                    <div class="glass p-6 rounded-2xl">
+                        <h4 class="font-bold text-lg text-white">35 - 50 seg: Precio y Cierre</h4>
+                        <p class="text-sm opacity-70">Revelación del costo. Opinión honesta. Ritmo lento para enfatizar el mensaje.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Production Script -->
+        <section class="glass rounded-3xl overflow-hidden">
+            <div class="p-6 border-b border-borderSubtle">
+                <h2 class="text-2xl font-bold text-white">Tabla de Guion</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-black/20">
+                        <tr>
+                            <th class="p-4 font-semibold text-neonCyan">Guion (Locución y Texto)</th>
+                            <th class="p-4 font-semibold text-neonPink">Visuales y Transiciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-borderSubtle">
+                        <tr class="row-hover transition-colors">
+                            <td class="p-6 font-medium text-lg leading-relaxed">¿Ya saben donde grabo la Cachirula su ultimo video?</td>
+                            <td class="p-6 italic opacity-80 text-sm">Pantalla dividida: Fragmento del video musical vs Fachada real.</td>
+                        </tr>
+                        <tr class="row-hover transition-colors">
+                            <td class="p-6 font-medium text-lg leading-relaxed">¡Lo encontramos y no van a creer lo que cuesta aqui!</td>
+                            <td class="p-6 italic opacity-80 text-sm">Corte rápido a primer plano del creador emocionado.</td>
+                        </tr>
+                        <tr class="row-hover transition-colors">
+                            <td class="p-6 font-medium text-lg leading-relaxed">Es una taquería con toda la onda del norte instalada en plena CDMX. Miren nada mas estas frases.</td>
+                            <td class="p-6 italic opacity-80 text-sm">Transición de látigo (whip pan) hacia el interior. Tomas rápidas de letreros.</td>
+                        </tr>
+                        <tr class="row-hover transition-colors">
+                            <td class="p-6 font-medium text-lg leading-relaxed">Aqui lo que manda es la <span class="text-neonCyan font-bold">CALIDAD</span>. La carne esta de otro nivel, nada de pellejos, pura premium.</td>
+                            <td class="p-6 italic opacity-80 text-sm">Primer plano en camara lenta de carne. Zoom digital al morder el taco.</td>
+                        </tr>
+                        <tr class="row-hover transition-colors">
+                            <td class="p-6 font-medium text-lg leading-relaxed">Pero preparen la cartera, porque el antojo sale <span class="text-neonPink font-bold">CARO</span>. La cuenta sube rapido.</td>
+                            <td class="p-6 italic opacity-80 text-sm">Efecto sonido moneda. Texto en pantalla: $$$$. Ticket de pago mostrado.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="flex flex-col md:flex-row justify-between items-center gap-6 py-12 border-t border-borderSubtle">
+            <div class="flex items-center gap-4">
+                <span class="px-4 py-2 rounded-full bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 text-sm font-bold">En Revisión</span>
+                <span class="text-sm opacity-50">Plan v1.2.0</span>
+            </div>
+            <div class="flex gap-4">
+                <button class="px-6 py-3 rounded-xl border border-white/20 hover:bg-white/10 transition-all font-semibold">Solicitar Cambios</button>
+                <button class="px-6 py-3 rounded-xl bg-neonPink hover:bg-rose-600 transition-all text-white font-semibold shadow-[0_0_20px_rgba(254,44,85,0.3)]">Aprobar Plan</button>
+            </div>
+        </footer>
+    </main>
+
+</body>
+</html>

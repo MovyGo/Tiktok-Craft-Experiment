@@ -1,106 +1,214 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Repositorio de Guiones | MovyGo</title>
-  <!-- Tailwind CSS CDN -->
+  <title>Repositorio de Guiones | TikTok Production</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            bg: '#0F0F0F',
+            card: 'rgba(255, 255, 255, 0.03)',
+            neonPink: '#FE2C55',
+            neonCyan: '#25F4EE',
+            borderSubtle: 'rgba(255, 255, 255, 0.1)'
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    body { font-family: 'Inter', sans-serif; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+    body { font-family: 'Inter', sans-serif; background-color: #0F0F0F; color: #E5E5E5; }
+    .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    .card-hover:hover { background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.2); }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen">
+<body class="p-4 md:p-8 min-h-screen">
 
-  <!-- Encabezado -->
-  <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-sm sticky top-0 z-10">
-    <div class="max-w-5xl mx-auto px-4 py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+  <main class="max-w-6xl mx-auto space-y-8">
+
+    <!-- Header Principal -->
+    <header class="space-y-4 border-b border-borderSubtle pb-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <span class="text-neonCyan text-xs uppercase font-bold tracking-widest">TikTok Production Vault</span>
+          <h1 class="text-3xl md:text-5xl font-extrabold tracking-tighter text-white mt-1">
+            Repositorio de <span class="text-neonPink">Guiones</span>
+          </h1>
+          <p class="text-sm opacity-70 mt-1">Base centralizada de libretos, desgloses y roadmaps audiovisuales.</p>
+        </div>
+
+        <!-- Buscador -->
+        <div class="w-full sm:w-72">
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Buscar guiones o temas..." 
+            class="w-full glass px-4 py-2.5 rounded-xl text-sm text-white placeholder:text-neutral-500 focus:outline-none focus:border-neonCyan transition"
+          >
+        </div>
+      </div>
+    </header>
+
+    <!-- VISTA 1: Selector de Carpetas -->
+    <section id="foldersView" class="space-y-6">
       <div>
-        <div class="flex items-center gap-2">
-          <span class="text-2xl">🎬</span>
-          <h1 class="text-xl font-bold tracking-tight text-white">Repositorio de Guiones</h1>
-        </div>
-        <p class="text-sm text-slate-400 mt-1">Catálogo de guiones y contenido multimedia para TikTok</p>
-      </div>
-      <div class="relative w-full sm:w-64">
-        <input 
-          type="text" 
-          id="searchInput" 
-          placeholder="Buscar guion..." 
-          class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
-        >
-      </div>
-    </div>
-  </header>
-
-  <!-- Contenido principal -->
-  <main class="max-w-5xl mx-auto px-4 py-8 space-y-10">
-
-    <!-- Sección de Daniel -->
-    <section>
-      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
-        <div class="flex items-center gap-2">
-          <span class="text-xl">👤</span>
-          <h2 class="text-lg font-semibold text-white">Guiones de Daniel</h2>
-        </div>
-        <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-800/50" id="danielCount">
-          1 disponible
-        </span>
+        <h2 class="text-xl font-bold text-white tracking-tight">Carpetas de Creadores</h2>
+        <p class="text-xs opacity-60">Selecciona una carpeta para ver sus guiones correspondientes.</p>
       </div>
 
-      <!-- Lista de Guiones de Daniel -->
-      <div class="grid gap-3 sm:grid-cols-2" id="danielList">
-        
-        <!-- Guion 1 -->
-        <a href="daniel/TikTokCraft-saved.html" class="script-card group block p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-850 transition duration-150">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Carpeta Daniel -->
+        <div onclick="openFolder('daniel')" class="glass card-hover p-6 rounded-3xl cursor-pointer transition-all duration-200 border-l-4 border-l-neonCyan group">
           <div class="flex items-start justify-between">
-            <div class="flex items-center gap-2.5">
-              <div class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400 group-hover:bg-indigo-500/20 transition">
-                📄
-              </div>
-              <div>
-                <h3 class="font-medium text-slate-200 group-hover:text-indigo-300 transition text-sm">
-                  TikTokCraft Initial Draft
-                </h3>
-                <span class="text-xs text-slate-500">TikTokCraft-saved.html</span>
-              </div>
+            <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl group-hover:scale-105 transition-transform">
+              📁
             </div>
-            <span class="text-slate-500 group-hover:text-indigo-400 transition text-sm">→</span>
+            <span class="px-3 py-1 rounded-full bg-neonCyan/10 text-neonCyan text-xs font-semibold border border-neonCyan/20">
+              1 Guion
+            </span>
           </div>
-        </a>
+          <div class="mt-6">
+            <h3 class="text-2xl font-bold text-white group-hover:text-neonCyan transition">Daniel</h3>
+            <p class="text-sm opacity-70 mt-1">Guiones de contenido, reseñas y experimentos de engagement.</p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-borderSubtle flex items-center justify-between text-xs font-semibold text-neonCyan">
+            <span>Abrir carpeta</span>
+            <span class="text-base group-hover:translate-x-1 transition-transform">→</span>
+          </div>
+        </div>
 
-        <!-- Cuando agregues más guiones de Daniel, sólo duplicas el bloque <a> de arriba -->
-
+        <!-- Carpeta Joel -->
+        <div onclick="openFolder('joel')" class="glass card-hover p-6 rounded-3xl cursor-pointer transition-all duration-200 border-l-4 border-l-neonPink group">
+          <div class="flex items-start justify-between">
+            <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl group-hover:scale-105 transition-transform">
+              📁
+            </div>
+            <span class="px-3 py-1 rounded-full bg-white/10 text-neutral-400 text-xs font-semibold">
+              0 Guiones
+            </span>
+          </div>
+          <div class="mt-6">
+            <h3 class="text-2xl font-bold text-white group-hover:text-neonPink transition">Joel</h3>
+            <p class="text-sm opacity-70 mt-1">Línea de contenido automotriz, logística y movilidad urbana.</p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-borderSubtle flex items-center justify-between text-xs font-semibold text-neutral-400">
+            <span>Abrir carpeta</span>
+            <span class="text-base group-hover:translate-x-1 transition-transform">→</span>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Sección de Joel (Preparada para el futuro) -->
-    <section class="opacity-75">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+    <!-- VISTA 2: Contenido de la Carpeta (Oculto por defecto) -->
+    <section id="scriptsView" class="hidden space-y-6">
+      
+      <!-- Navegación y Volver -->
+      <div class="flex items-center justify-between">
+        <button onclick="showFolders()" class="flex items-center gap-2 px-4 py-2 rounded-xl glass hover:bg-white/10 text-xs uppercase tracking-widest font-semibold text-white transition">
+          <span>←</span> Volver a Creadores
+        </button>
         <div class="flex items-center gap-2">
-          <span class="text-xl">👤</span>
-          <h2 class="text-lg font-semibold text-white">Guiones de Joel</h2>
+          <span class="text-xs opacity-50 uppercase tracking-wider">Viendo carpeta:</span>
+          <span id="currentFolderName" class="text-xs font-bold uppercase tracking-widest text-neonCyan px-3 py-1 rounded-full bg-white/5 border border-white/10">Daniel</span>
         </div>
-        <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-slate-800 text-slate-400">
-          Próximamente
-        </span>
       </div>
 
-      <div class="rounded-xl border border-dashed border-slate-800 p-6 text-center text-slate-500 text-sm">
-        Aún no hay guiones cargados para Joel. Se habilitarán en cuanto subas archivos a su carpeta.
+      <!-- LISTADO: Guiones de Daniel -->
+      <div id="danielScripts" class="space-y-4">
+        
+        <!-- GUION 1 (Vinculado a TikTokCraft-saved.html con título limpio) -->
+        <a href="daniel/TikTokCraft-saved.html" class="script-card glass card-hover p-6 rounded-2xl block transition group border-l-4 border-l-neonPink">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="space-y-2">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full bg-neonPink/10 text-neonPink text-[11px] font-bold border border-neonPink/20">Review / Trend</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 text-[11px] font-bold border border-yellow-500/20">En Revisión</span>
+                <span class="text-xs opacity-40">50 segundos de ritmo</span>
+              </div>
+              <h3 class="text-lg md:text-xl font-bold text-white group-hover:text-neonPink transition">
+                ¡Encontramos los Tacos donde grabó la Cachirula!
+              </h3>
+              <p class="text-xs md:text-sm opacity-70 line-clamp-1">
+                Análisis de gancho visual de 0 a 5 seg, desglose rítmico, ambiente norteño y desglose de costo/ticket final.
+              </p>
+            </div>
+            <div class="flex items-center gap-2 self-end md:self-center shrink-0">
+              <span class="text-xs uppercase font-bold tracking-widest text-neonPink group-hover:underline">Abrir Guion</span>
+              <span class="text-neonPink group-hover:translate-x-1 transition-transform">→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Para agregar un nuevo guion de Daniel, solo duplicas el bloque <a href="..."> de arriba -->
+
       </div>
+
+      <!-- LISTADO: Guiones de Joel -->
+      <div id="joelScripts" class="hidden space-y-4">
+        <div class="glass p-12 rounded-3xl text-center border-dashed border-white/10 space-y-3">
+          <span class="text-3xl">⏳</span>
+          <h4 class="text-base font-bold text-white">No hay guiones subidos todavía</h4>
+          <p class="text-xs opacity-60 max-w-md mx-auto">
+            Los guiones de Joel aparecerán aquí tan pronto agregues sus archivos HTML a la carpeta <code class="text-neonCyan">joel/</code> en GitHub.
+          </p>
+        </div>
+      </div>
+
     </section>
 
   </main>
 
-  <!-- Filtro en tiempo real -->
+  <!-- Lógica de navegación e interacción -->
   <script>
+    const foldersView = document.getElementById('foldersView');
+    const scriptsView = document.getElementById('scriptsView');
+    const danielScripts = document.getElementById('danielScripts');
+    const joelScripts = document.getElementById('joelScripts');
+    const currentFolderName = document.getElementById('currentFolderName');
     const searchInput = document.getElementById('searchInput');
-    const cards = document.querySelectorAll('.script-card');
 
+    function openFolder(creator) {
+      foldersView.classList.add('hidden');
+      scriptsView.classList.remove('hidden');
+
+      if (creator === 'daniel') {
+        danielScripts.classList.remove('hidden');
+        joelScripts.classList.add('hidden');
+        currentFolderName.textContent = 'Daniel';
+        currentFolderName.className = 'text-xs font-bold uppercase tracking-widest text-neonCyan px-3 py-1 rounded-full bg-white/5 border border-white/10';
+      } else {
+        danielScripts.classList.add('hidden');
+        joelScripts.classList.remove('hidden');
+        currentFolderName.textContent = 'Joel';
+        currentFolderName.className = 'text-xs font-bold uppercase tracking-widest text-neonPink px-3 py-1 rounded-full bg-white/5 border border-white/10';
+      }
+    }
+
+    function showFolders() {
+      scriptsView.classList.add('hidden');
+      foldersView.classList.remove('hidden');
+    }
+
+    // Buscador instantáneo
     searchInput.addEventListener('input', (e) => {
       const query = e.target.value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.script-card');
+      
+      if (query.length > 0) {
+        // Al buscar, mostramos directo la vista de guiones
+        foldersView.classList.add('hidden');
+        scriptsView.classList.remove('hidden');
+        danielScripts.classList.remove('hidden');
+        joelScripts.classList.remove('hidden');
+        currentFolderName.textContent = 'Búsqueda Global';
+      }
+
       cards.forEach(card => {
         const text = card.textContent.toLowerCase();
         card.style.display = text.includes(query) ? 'block' : 'none';

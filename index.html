@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Repositorio de Guiones | MovyGo</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+
+  <!-- Encabezado -->
+  <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-sm sticky top-0 z-10">
+    <div class="max-w-5xl mx-auto px-4 py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🎬</span>
+          <h1 class="text-xl font-bold tracking-tight text-white">Repositorio de Guiones</h1>
+        </div>
+        <p class="text-sm text-slate-400 mt-1">Catálogo de guiones y contenido multimedia para TikTok</p>
+      </div>
+      <div class="relative w-full sm:w-64">
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="Buscar guion..." 
+          class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+        >
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main class="max-w-5xl mx-auto px-4 py-8 space-y-10">
+
+    <!-- Sección de Daniel -->
+    <section>
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">👤</span>
+          <h2 class="text-lg font-semibold text-white">Guiones de Daniel</h2>
+        </div>
+        <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-800/50" id="danielCount">
+          1 disponible
+        </span>
+      </div>
+
+      <!-- Lista de Guiones de Daniel -->
+      <div class="grid gap-3 sm:grid-cols-2" id="danielList">
+        
+        <!-- Guion 1 -->
+        <a href="daniel/TikTokCraft-saved.html" class="script-card group block p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-850 transition duration-150">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400 group-hover:bg-indigo-500/20 transition">
+                📄
+              </div>
+              <div>
+                <h3 class="font-medium text-slate-200 group-hover:text-indigo-300 transition text-sm">
+                  TikTokCraft Initial Draft
+                </h3>
+                <span class="text-xs text-slate-500">TikTokCraft-saved.html</span>
+              </div>
+            </div>
+            <span class="text-slate-500 group-hover:text-indigo-400 transition text-sm">→</span>
+          </div>
+        </a>
+
+        <!-- Cuando agregues más guiones de Daniel, sólo duplicas el bloque <a> de arriba -->
+
+      </div>
+    </section>
+
+    <!-- Sección de Joel (Preparada para el futuro) -->
+    <section class="opacity-75">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">👤</span>
+          <h2 class="text-lg font-semibold text-white">Guiones de Joel</h2>
+        </div>
+        <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-slate-800 text-slate-400">
+          Próximamente
+        </span>
+      </div>
+
+      <div class="rounded-xl border border-dashed border-slate-800 p-6 text-center text-slate-500 text-sm">
+        Aún no hay guiones cargados para Joel. Se habilitarán en cuanto subas archivos a su carpeta.
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Filtro en tiempo real -->
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const cards = document.querySelectorAll('.script-card');
+
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(query) ? 'block' : 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>

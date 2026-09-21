@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marketing Review Dashboard | TikTok Production</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Supabase JS Client CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -15,7 +18,6 @@
                         card: 'rgba(255, 255, 255, 0.03)',
                         neonPink: '#FE2C55',
                         neonCyan: '#25F4EE',
-                        neonGreen: '#00F2FE',
                         borderSubtle: 'rgba(255, 255, 255, 0.1)'
                     }
                 }
@@ -34,13 +36,13 @@
 </head>
 <body class="p-4 md:p-8 relative min-h-screen">
 
-    <!-- Barra flotante de regreso y herramientas -->
+    <!-- Barra de regreso y alerta -->
     <div class="max-w-6xl mx-auto mb-6 flex flex-wrap items-center justify-between gap-3">
         <a href="../index.html" class="flex items-center gap-2 px-4 py-2 rounded-xl glass hover:bg-white/10 text-xs uppercase tracking-widest font-semibold text-white transition">
             <span>←</span> Volver al Repositorio
         </a>
         <div id="editAlert" class="hidden text-xs bg-neonCyan/10 border border-neonCyan/30 text-neonCyan px-3 py-1.5 rounded-lg flex items-center gap-2">
-            <span>✏️ Modo edición activado: Haz clic sobre cualquier texto para modificarlo.</span>
+            <span>✏️ Modo edición activado: Haz clic en cualquier texto para corregirlo.</span>
         </div>
     </div>
 
@@ -146,7 +148,7 @@
         <footer class="flex flex-col md:flex-row justify-between items-center gap-6 py-12 border-t border-borderSubtle">
             <div class="flex items-center gap-4">
                 <span id="statusBadge" class="px-4 py-2 rounded-full bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 text-sm font-bold transition-all">
-                    En Revisión
+                    Cargando...
                 </span>
                 <span class="text-sm opacity-50">Plan v1.2.0</span>
             </div>
@@ -160,34 +162,38 @@
                 <button onclick="approvePlan()" id="btnApprove" class="px-6 py-3 rounded-xl bg-neonPink hover:bg-rose-600 transition-all text-white font-semibold text-sm shadow-[0_0_20px_rgba(254,44,85,0.3)]">
                     Aprobar Plan
                 </button>
-                <button onclick="downloadUpdatedHTML()" class="px-4 py-3 rounded-xl glass hover:bg-white/10 border border-white/20 transition-all text-sm text-neutral-300" title="Descargar archivo HTML con los cambios hechos">
-                    💾 Guardar / Descargar
+                <button onclick="downloadUpdatedHTML()" class="px-4 py-3 rounded-xl glass hover:bg-white/10 border border-white/20 transition-all text-sm text-neutral-300" title="Descargar copia del archivo">
+                    💾 Guardar Copia
                 </button>
             </div>
         </footer>
     </main>
 
     <!-- Barra lateral de Comentarios estilo Google Docs -->
-    <aside id="commentsDrawer" class="fixed top-0 right-0 h-full w-full sm:w-96 glass bg-[#0F0F0F]/95 border-l border-borderSubtle p-6 translate-x-full transition-transform duration-300 z-50 flex flex-col justify-between">
+    <aside id="commentsDrawer" class="fixed top-0 right-0 h-full w-full sm:w-96 glass bg-[#0F0F0F]/95 border-l border-borderSubtle p-6 translate-x-full transition-transform duration-300 z-50 flex flex-col justify-between shadow-2xl">
         <div>
             <div class="flex items-center justify-between pb-4 border-b border-borderSubtle">
                 <div class="flex items-center gap-2">
                     <span class="text-neonCyan text-lg">💬</span>
                     <h3 class="font-bold text-white text-base">Comentarios y Cambios</h3>
                 </div>
-                <button onclick="toggleComments()" class="text-neutral-400 hover:text-white p-1">✕</button>
+                <button onclick="closeComments()" class="text-neutral-400 hover:text-white p-1 text-lg">✕</button>
             </div>
 
-            <div class="mt-4 space-y-4">
-                <p class="text-xs opacity-60">Escribe aquí las observaciones o correcciones para este guion:</p>
-                <textarea id="commentText" rows="6" placeholder="Ej: En los primeros 5 segundos sugiero cambiar la toma de la fachada por el plato servido para mayor gancho..." class="w-full glass p-3 rounded-xl text-sm text-white focus:outline-none focus:border-neonCyan resize-none placeholder:text-neutral-600"></textarea>
-                <button onclick="addComment()" class="w-full py-2.5 rounded-xl bg-neonCyan text-black font-bold text-xs uppercase tracking-wider hover:opacity-90 transition">
-                    Añadir Nota
+            <div class="mt-4 space-y-3">
+                <input id="commentAuthor" type="text" placeholder="Tu nombre (ej. Joel o Daniel)" class="w-full glass px-3 py-2 rounded-xl text-xs text-white placeholder:text-neutral-600 focus:outline-none focus:border-neonCyan">
+                <textarea id="commentText" rows="4" placeholder="Escribe tu observación o sugerencia aquí..." class="w-full glass p-3 rounded-xl text-xs text-white focus:outline-none focus:border-neonCyan resize-none placeholder:text-neutral-600"></textarea>
+                <button onclick="saveCommentToSupabase()" id="btnAddComment" class="w-full py-2.5 rounded-xl bg-neonCyan text-black font-bold text-xs uppercase tracking-wider hover:opacity-90 transition">
+                    Publicar Comentario
                 </button>
             </div>
 
-            <!-- Listado de comentarios agregados -->
-            <div id="commentsList" class="mt-6 space-y-3 overflow-y-auto max-h-64 pr-1"></div>
+            <div class="mt-6">
+                <h4 class="text-xs uppercase tracking-widest text-neutral-400 font-bold mb-3">Comentarios registrados</h4>
+                <div id="commentsList" class="space-y-3 overflow-y-auto max-h-72 pr-1">
+                    <p class="text-xs text-neutral-500">Cargando comentarios...</p>
+                </div>
+            </div>
         </div>
 
         <div class="pt-4 border-t border-borderSubtle">
@@ -197,26 +203,81 @@
         </div>
     </aside>
 
-    <!-- Lógica de Interactividad -->
+    <!-- Sincronización Supabase e Interactividad -->
     <script>
+        // Inicialización de Supabase con tus credenciales
+        const SUPABASE_URL = 'https://rvzwttbazggsmlhubkdd.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_-g__jgzED6Nue5Lwan917w_rNrftw4j';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const SCRIPT_SLUG = 'tiktok-cachirula';
+
         let isEditing = false;
         const statusBadge = document.getElementById('statusBadge');
         const btnApprove = document.getElementById('btnApprove');
         const btnEdit = document.getElementById('btnEdit');
         const editAlert = document.getElementById('editAlert');
         const commentsDrawer = document.getElementById('commentsDrawer');
+        const commentAuthor = document.getElementById('commentAuthor');
         const commentText = document.getElementById('commentText');
         const commentsList = document.getElementById('commentsList');
 
-        // 1. APROBAR PLAN
-        function approvePlan() {
-            statusBadge.textContent = '✓ Aprobado';
-            statusBadge.className = 'px-4 py-2 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-sm font-bold shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all';
-            btnApprove.textContent = 'Plan Aprobado';
-            btnApprove.classList.replace('bg-neonPink', 'bg-emerald-600');
+        // Cargar estado inicial y comentarios al abrir la página
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchScriptStatus();
+            fetchComments();
+        });
+
+        // 1. OBTENER Y ACTUALIZAR ESTADO (Aprobado / En Revisión)
+        async function fetchScriptStatus() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('script_status')
+                    .select('status')
+                    .eq('slug', SCRIPT_SLUG)
+                    .single();
+
+                if (data && data.status) {
+                    renderStatus(data.status);
+                } else {
+                    renderStatus('En Revisión');
+                }
+            } catch (err) {
+                renderStatus('En Revisión');
+            }
         }
 
-        // 2. MODO REALIZAR CAMBIOS (Editar en pantalla)
+        function renderStatus(status) {
+            if (status === 'Aprobado') {
+                statusBadge.textContent = '✓ Aprobado';
+                statusBadge.className = 'px-4 py-2 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-sm font-bold shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all';
+                btnApprove.textContent = 'Plan Aprobado';
+                btnApprove.className = 'px-6 py-3 rounded-xl bg-emerald-600 text-white font-semibold text-sm cursor-default';
+                btnApprove.disabled = true;
+            } else {
+                statusBadge.textContent = 'En Revisión';
+                statusBadge.className = 'px-4 py-2 rounded-full bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 text-sm font-bold transition-all';
+                btnApprove.textContent = 'Aprobar Plan';
+                btnApprove.className = 'px-6 py-3 rounded-xl bg-neonPink hover:bg-rose-600 transition-all text-white font-semibold text-sm shadow-[0_0_20px_rgba(254,44,85,0.3)]';
+                btnApprove.disabled = false;
+            }
+        }
+
+        async function approvePlan() {
+            btnApprove.textContent = 'Guardando...';
+            const { error } = await supabaseClient
+                .from('script_status')
+                .upsert({ slug: SCRIPT_SLUG, status: 'Aprobado' });
+
+            if (!error) {
+                renderStatus('Aprobado');
+            } else {
+                alert('No se pudo guardar el cambio en Supabase. Intenta nuevamente.');
+                renderStatus('En Revisión');
+            }
+        }
+
+        // 2. MODO REALIZAR CAMBIOS (Abre comentarios a la derecha y permite editar texto)
         function toggleEditMode() {
             isEditing = !isEditing;
             const targets = document.querySelectorAll('.editable-target, #scriptTitle');
@@ -235,6 +296,8 @@
                 btnEdit.innerHTML = '<span>💾</span> Finalizar Edición';
                 btnEdit.classList.add('bg-neonCyan', 'text-black');
                 btnEdit.classList.remove('text-neonCyan');
+                // Al entrar a realizar cambios, abre el panel de comentarios sugeridos
+                openComments();
             } else {
                 editAlert.classList.add('hidden');
                 btnEdit.innerHTML = '<span>✏️</span> Realizar Cambios';
@@ -248,25 +311,69 @@
             commentsDrawer.classList.toggle('translate-x-full');
         }
 
-        function addComment() {
-            const val = commentText.value.trim();
-            if (!val) return;
-            const div = document.createElement('div');
-            div.className = 'glass p-3 rounded-xl border border-white/10 text-xs space-y-1';
-            div.innerHTML = `
-                <div class="flex justify-between items-center text-[10px] text-neutral-400">
-                    <span class="text-neonCyan font-bold">Observación</span>
-                    <span>Ahora</span>
-                </div>
-                <p class="text-neutral-200">${val}</p>
-            `;
-            commentsList.prepend(div);
-            commentText.value = '';
+        function openComments() {
+            commentsDrawer.classList.remove('translate-x-full');
+        }
+
+        function closeComments() {
+            commentsDrawer.classList.add('translate-x-full');
+        }
+
+        async function fetchComments() {
+            const { data, error } = await supabaseClient
+                .from('script_comments')
+                .select('*')
+                .eq('slug', SCRIPT_SLUG)
+                .order('id', { ascending: false });
+
+            if (error || !data || data.length === 0) {
+                commentsList.innerHTML = '<p class="text-xs text-neutral-500 italic">No hay observaciones registradas aún.</p>';
+                return;
+            }
+
+            commentsList.innerHTML = '';
+            data.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'glass p-3 rounded-xl border border-white/10 text-xs space-y-1';
+                div.innerHTML = `
+                    <div class="flex justify-between items-center text-[10px] text-neutral-400">
+                        <span class="text-neonCyan font-bold">${escapeHtml(item.author || 'Colaborador')}</span>
+                        <span>${new Date(item.created_at).toLocaleDateString()}</span>
+                    </div>
+                    <p class="text-neutral-200">${escapeHtml(item.content)}</p>
+                `;
+                commentsList.appendChild(div);
+            });
+        }
+
+        async function saveCommentToSupabase() {
+            const text = commentText.value.trim();
+            const author = commentAuthor.value.trim() || 'Colaborador';
+            const btn = document.getElementById('btnAddComment');
+
+            if (!text) return;
+
+            btn.disabled = true;
+            btn.textContent = 'Guardando...';
+
+            const { error } = await supabaseClient
+                .from('script_comments')
+                .insert([{ slug: SCRIPT_SLUG, author: author, content: text }]);
+
+            btn.disabled = false;
+            btn.textContent = 'Publicar Comentario';
+
+            if (!error) {
+                commentText.value = '';
+                fetchComments();
+            } else {
+                alert('Hubo un problema al guardar la nota.');
+            }
         }
 
         function copyAllComments() {
             const notes = Array.from(commentsList.querySelectorAll('p')).map(p => '• ' + p.innerText).join('\n');
-            if (!notes) {
+            if (!notes || notes.includes('No hay observaciones')) {
                 alert('No hay notas para copiar.');
                 return;
             }
@@ -274,11 +381,15 @@
             alert('¡Notas copiadas al portapapeles!');
         }
 
-        // 4. DESCARGAR ARCHIVO HTML ACTUALIZADO
+        function escapeHtml(string) {
+            const div = document.createElement('div');
+            div.innerText = string;
+            return div.innerHTML;
+        }
+
+        // 4. DESCARGAR COPIA HTML
         function downloadUpdatedHTML() {
-            // Desactivar temporalmente marcos de edición antes de guardar
             if (isEditing) toggleEditMode();
-            
             const fullDoc = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
             const blob = new Blob([fullDoc], { type: 'text/html' });
             const a = document.createElement('a');

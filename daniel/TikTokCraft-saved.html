@@ -42,29 +42,29 @@
             <span>←</span> Volver al Repositorio
         </a>
         <div id="editAlert" class="hidden text-xs bg-neonCyan/10 border border-neonCyan/30 text-neonCyan px-3 py-1.5 rounded-lg flex items-center gap-2">
-            <span>✏️ Modo edición activado: Haz clic en cualquier texto para corregirlo.</span>
+            <span>✏️ Modo edición activo: Haz clic en cualquier texto para modificarlo. Al dar "Guardar Cambios", se sincronizará en la nube.</span>
         </div>
     </div>
 
     <main class="max-w-6xl mx-auto space-y-12">
         <!-- Header -->
         <header class="space-y-6">
-            <h1 id="scriptTitle" class="text-4xl md:text-6xl font-extrabold tracking-tighter text-white">
+            <h1 id="scriptTitle" class="text-4xl md:text-6xl font-extrabold tracking-tighter text-white editable-target" data-key="title">
                 ¡Encontramos los <span class="text-neonPink">Tacos</span> dónde grabó la <span class="text-neonCyan">Cachirula</span>!
             </h1>
             
             <div class="flex flex-wrap gap-4">
                 <div class="glass p-4 rounded-xl flex-1 min-w-[280px]">
                     <h3 class="text-neonCyan text-xs uppercase font-bold tracking-widest mb-1">Contexto</h3>
-                    <p class="text-sm opacity-80 editable-target">La cantante Cachirula grabó su videoclip en una taquería de CDMX. Oportunidad de review para atraer seguidores.</p>
+                    <p class="text-sm opacity-80 editable-target" data-key="context">La cantante Cachirula grabó su videoclip en una taquería de CDMX. Oportunidad de review para atraer seguidores.</p>
                 </div>
                 <div class="glass p-4 rounded-xl flex-1 min-w-[280px]">
                     <h3 class="text-neonPink text-xs uppercase font-bold tracking-widest mb-1">Público Objetivo</h3>
-                    <p class="text-sm opacity-80 editable-target">Jóvenes y adultos jóvenes (Clase C- y D+) en México.</p>
+                    <p class="text-sm opacity-80 editable-target" data-key="target">Jóvenes y adultos jóvenes (Clase C- y D+) en México.</p>
                 </div>
                 <div class="glass p-4 rounded-xl flex-1 min-w-[280px]">
                     <h3 class="text-white text-xs uppercase font-bold tracking-widest mb-1">POV</h3>
-                    <p class="text-sm opacity-80 editable-target">Lugar temático, carne de calidad, buen ambiente, pero precios elevados y cuenta costosa.</p>
+                    <p class="text-sm opacity-80 editable-target" data-key="pov">Lugar temático, carne de calidad, buen ambiente, pero precios elevados y cuenta costosa.</p>
                 </div>
             </div>
         </header>
@@ -77,29 +77,29 @@
                 <div class="relative">
                     <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-neonPink flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(254,44,85,0.5)]">01</div>
                     <div class="glass p-6 rounded-2xl">
-                        <h4 class="font-bold text-lg text-neonCyan editable-target">0 - 5 seg: El Gancho</h4>
-                        <p class="text-sm opacity-70 editable-target">Impacto visual inmediato. Comparación rápida entre video musical y realidad. Ritmo frenético.</p>
+                        <h4 class="font-bold text-lg text-neonCyan editable-target" data-key="rhythm-title-1">0 - 5 seg: El Gancho</h4>
+                        <p class="text-sm opacity-70 editable-target" data-key="rhythm-desc-1">Impacto visual inmediato. Comparación rápida entre video musical y realidad. Ritmo frenético.</p>
                     </div>
                 </div>
                 <div class="relative">
                     <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-neonCyan flex items-center justify-center font-bold text-bg shadow-[0_0_15px_rgba(37,244,238,0.5)]">02</div>
                     <div class="glass p-6 rounded-2xl">
-                        <h4 class="font-bold text-lg text-white editable-target">5 - 15 seg: El Ambiente</h4>
-                        <p class="text-sm opacity-70 editable-target">Recorrido dinámico. Enfoque en decoración norteña y frases en paredes para identificación.</p>
+                        <h4 class="font-bold text-lg text-white editable-target" data-key="rhythm-title-2">5 - 15 seg: El Ambiente</h4>
+                        <p class="text-sm opacity-70 editable-target" data-key="rhythm-desc-2">Recorrido dinámico. Enfoque en decoración norteña y frases en paredes para identificación.</p>
                     </div>
                 </div>
                 <div class="relative">
                     <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-white flex items-center justify-center font-bold text-bg">03</div>
                     <div class="glass p-6 rounded-2xl">
-                        <h4 class="font-bold text-lg text-white editable-target">15 - 35 seg: Comida y Bebida</h4>
-                        <p class="text-sm opacity-70 editable-target">Food porn. Carne, barra de aguas y licuachelas. Ritmo constante.</p>
+                        <h4 class="font-bold text-lg text-white editable-target" data-key="rhythm-title-3">15 - 35 seg: Comida y Bebida</h4>
+                        <p class="text-sm opacity-70 editable-target" data-key="rhythm-desc-3">Food porn. Carne, barra de aguas y licuachelas. Ritmo constante.</p>
                     </div>
                 </div>
                 <div class="relative">
                     <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-white flex items-center justify-center font-bold text-bg">04</div>
                     <div class="glass p-6 rounded-2xl">
-                        <h4 class="font-bold text-lg text-white editable-target">35 - 50 seg: Precio y Cierre</h4>
-                        <p class="text-sm opacity-70 editable-target">Revelación del costo. Opinión honesta. Ritmo lento para enfatizar el mensaje.</p>
+                        <h4 class="font-bold text-lg text-white editable-target" data-key="rhythm-title-4">35 - 50 seg: Precio y Cierre</h4>
+                        <p class="text-sm opacity-70 editable-target" data-key="rhythm-desc-4">Revelación del costo. Opinión honesta. Ritmo lento para enfatizar el mensaje.</p>
                     </div>
                 </div>
             </div>
@@ -120,24 +120,24 @@
                     </thead>
                     <tbody class="divide-y divide-borderSubtle">
                         <tr class="row-hover transition-colors">
-                            <td class="p-6 font-medium text-lg leading-relaxed editable-target">¿Ya saben donde grabo la Cachirula su ultimo video?</td>
-                            <td class="p-6 italic opacity-80 text-sm editable-target">Pantalla dividida: Fragmento del video musical vs Fachada real.</td>
+                            <td class="p-6 font-medium text-lg leading-relaxed editable-target" data-key="script-row-1-text">¿Ya saben donde grabo la Cachirula su ultimo video?</td>
+                            <td class="p-6 italic opacity-80 text-sm editable-target" data-key="script-row-1-vis">Pantalla dividida: Fragmento del video musical vs Fachada real.</td>
                         </tr>
                         <tr class="row-hover transition-colors">
-                            <td class="p-6 font-medium text-lg leading-relaxed editable-target">¡Lo encontramos y no van a creer lo que cuesta aqui!</td>
-                            <td class="p-6 italic opacity-80 text-sm editable-target">Corte rápido a primer plano del creador emocionado.</td>
+                            <td class="p-6 font-medium text-lg leading-relaxed editable-target" data-key="script-row-2-text">¡Lo encontramos y no van a creer lo que cuesta aqui!</td>
+                            <td class="p-6 italic opacity-80 text-sm editable-target" data-key="script-row-2-vis">Corte rápido a primer plano del creador emocionado.</td>
                         </tr>
                         <tr class="row-hover transition-colors">
-                            <td class="p-6 font-medium text-lg leading-relaxed editable-target">Es una taquería con toda la onda del norte instalada en plena CDMX. Miren nada mas estas frases.</td>
-                            <td class="p-6 italic opacity-80 text-sm editable-target">Transición de látigo (whip pan) hacia el interior. Tomas rápidas de letreros.</td>
+                            <td class="p-6 font-medium text-lg leading-relaxed editable-target" data-key="script-row-3-text">Es una taquería con toda la onda del norte instalada en plena CDMX. Miren nada mas estas frases.</td>
+                            <td class="p-6 italic opacity-80 text-sm editable-target" data-key="script-row-3-vis">Transición de látigo (whip pan) hacia el interior. Tomas rápidas de letreros.</td>
                         </tr>
                         <tr class="row-hover transition-colors">
-                            <td class="p-6 font-medium text-lg leading-relaxed editable-target">Aqui lo que manda es la <span class="text-neonCyan font-bold">CALIDAD</span>. La carne esta de otro nivel, nada de pellejos, pura premium.</td>
-                            <td class="p-6 italic opacity-80 text-sm editable-target">Primer plano en camara lenta de carne. Zoom digital al morder el taco.</td>
+                            <td class="p-6 font-medium text-lg leading-relaxed editable-target" data-key="script-row-4-text">Aqui lo que manda es la <span class="text-neonCyan font-bold">CALIDAD</span>. La carne esta de otro nivel, nada de pellejos, pura premium.</td>
+                            <td class="p-6 italic opacity-80 text-sm editable-target" data-key="script-row-4-vis">Primer plano en camara lenta de carne. Zoom digital al morder el taco.</td>
                         </tr>
                         <tr class="row-hover transition-colors">
-                            <td class="p-6 font-medium text-lg leading-relaxed editable-target">Pero preparen la cartera, porque el antojo sale <span class="text-neonPink font-bold">CARO</span>. La cuenta sube rapido.</td>
-                            <td class="p-6 italic opacity-80 text-sm editable-target">Efecto sonido moneda. Texto en pantalla: $$$$. Ticket de pago mostrado.</td>
+                            <td class="p-6 font-medium text-lg leading-relaxed editable-target" data-key="script-row-5-text">Pero preparen la cartera, porque el antojo sale <span class="text-neonPink font-bold">CARO</span>. La cuenta sube rapido.</td>
+                            <td class="p-6 italic opacity-80 text-sm editable-target" data-key="script-row-5-vis">Efecto sonido moneda. Texto en pantalla: $$$$. Ticket de pago mostrado.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -205,7 +205,6 @@
 
     <!-- Sincronización Supabase e Interactividad -->
     <script>
-        // Inicialización de Supabase con tus credenciales
         const SUPABASE_URL = 'https://rvzwttbazggsmlhubkdd.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_-g__jgzED6Nue5Lwan917w_rNrftw4j';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -222,23 +221,30 @@
         const commentText = document.getElementById('commentText');
         const commentsList = document.getElementById('commentsList');
 
-        // Cargar estado inicial y comentarios al abrir la página
         document.addEventListener('DOMContentLoaded', () => {
-            fetchScriptStatus();
+            fetchScriptData();
             fetchComments();
         });
 
-        // 1. OBTENER Y ACTUALIZAR ESTADO (Aprobado / En Revisión)
-        async function fetchScriptStatus() {
+        // 1. OBTENER ESTADO Y TEXTOS EDITADOS GUARDADOS
+        async function fetchScriptData() {
             try {
                 const { data, error } = await supabaseClient
                     .from('script_status')
-                    .select('status')
+                    .select('status, content_data')
                     .eq('slug', SCRIPT_SLUG)
                     .single();
 
-                if (data && data.status) {
-                    renderStatus(data.status);
+                if (data) {
+                    renderStatus(data.status || 'En Revisión');
+
+                    // Si hay textos editados previamente guardados, aplicarlos
+                    if (data.content_data) {
+                        for (const [key, val] of Object.entries(data.content_data)) {
+                            const el = document.querySelector(`[data-key="${key}"]`);
+                            if (el) el.innerHTML = val;
+                        }
+                    }
                 } else {
                     renderStatus('En Revisión');
                 }
@@ -272,15 +278,15 @@
             if (!error) {
                 renderStatus('Aprobado');
             } else {
-                alert('No se pudo guardar el cambio en Supabase. Intenta nuevamente.');
+                alert('No se pudo guardar la aprobación en Supabase.');
                 renderStatus('En Revisión');
             }
         }
 
-        // 2. MODO REALIZAR CAMBIOS (Abre comentarios a la derecha y permite editar texto)
-        function toggleEditMode() {
+        // 2. MODO EDICIÓN Y GUARDADO AUTOMÁTICO DE TEXTOS
+        async function toggleEditMode() {
             isEditing = !isEditing;
-            const targets = document.querySelectorAll('.editable-target, #scriptTitle');
+            const targets = document.querySelectorAll('.editable-target');
             
             targets.forEach(el => {
                 el.contentEditable = isEditing;
@@ -293,13 +299,29 @@
 
             if (isEditing) {
                 editAlert.classList.remove('hidden');
-                btnEdit.innerHTML = '<span>💾</span> Finalizar Edición';
+                btnEdit.innerHTML = '<span>💾</span> Guardar Cambios';
                 btnEdit.classList.add('bg-neonCyan', 'text-black');
                 btnEdit.classList.remove('text-neonCyan');
-                // Al entrar a realizar cambios, abre el panel de comentarios sugeridos
                 openComments();
             } else {
+                // Guardar los textos en Supabase
                 editAlert.classList.add('hidden');
+                btnEdit.innerHTML = '<span>⏳</span> Guardando...';
+                
+                const contentData = {};
+                targets.forEach(el => {
+                    const key = el.getAttribute('data-key');
+                    if (key) contentData[key] = el.innerHTML;
+                });
+
+                const { error } = await supabaseClient
+                    .from('script_status')
+                    .upsert({ slug: SCRIPT_SLUG, content_data: contentData });
+
+                if (error) {
+                    alert('Hubo un error al guardar los textos modificados.');
+                }
+
                 btnEdit.innerHTML = '<span>✏️</span> Realizar Cambios';
                 btnEdit.classList.remove('bg-neonCyan', 'text-black');
                 btnEdit.classList.add('text-neonCyan');
@@ -387,7 +409,6 @@
             return div.innerHTML;
         }
 
-        // 4. DESCARGAR COPIA HTML
         function downloadUpdatedHTML() {
             if (isEditing) toggleEditMode();
             const fullDoc = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;

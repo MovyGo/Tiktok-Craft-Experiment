@@ -15,6 +15,7 @@
                         card: 'rgba(255, 255, 255, 0.03)',
                         neonPink: '#FE2C55',
                         neonCyan: '#25F4EE',
+                        neonGreen: '#00F2FE',
                         borderSubtle: 'rgba(255, 255, 255, 0.1)'
                     }
                 }
@@ -28,29 +29,40 @@
         .timeline-line::before { content: ''; position: absolute; left: 19px; top: 0; bottom: 0; width: 2px; background: rgba(37, 244, 238, 0.3); z-index: 0; }
         .accent-border { border-left: 4px solid #FE2C55; }
         .row-hover:hover { background: rgba(255, 255, 255, 0.06); }
+        .editable-active { outline: 2px dashed #25F4EE; outline-offset: 4px; border-radius: 6px; cursor: text; }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="p-4 md:p-8 relative min-h-screen">
+
+    <!-- Barra flotante de regreso y herramientas -->
+    <div class="max-w-6xl mx-auto mb-6 flex flex-wrap items-center justify-between gap-3">
+        <a href="../index.html" class="flex items-center gap-2 px-4 py-2 rounded-xl glass hover:bg-white/10 text-xs uppercase tracking-widest font-semibold text-white transition">
+            <span>←</span> Volver al Repositorio
+        </a>
+        <div id="editAlert" class="hidden text-xs bg-neonCyan/10 border border-neonCyan/30 text-neonCyan px-3 py-1.5 rounded-lg flex items-center gap-2">
+            <span>✏️ Modo edición activado: Haz clic sobre cualquier texto para modificarlo.</span>
+        </div>
+    </div>
 
     <main class="max-w-6xl mx-auto space-y-12">
         <!-- Header -->
         <header class="space-y-6">
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tighter text-white">
+            <h1 id="scriptTitle" class="text-4xl md:text-6xl font-extrabold tracking-tighter text-white">
                 ¡Encontramos los <span class="text-neonPink">Tacos</span> dónde grabó la <span class="text-neonCyan">Cachirula</span>!
             </h1>
             
             <div class="flex flex-wrap gap-4">
                 <div class="glass p-4 rounded-xl flex-1 min-w-[280px]">
                     <h3 class="text-neonCyan text-xs uppercase font-bold tracking-widest mb-1">Contexto</h3>
-                    <p class="text-sm opacity-80">La cantante Cachirula grabó su videoclip en una taquería de CDMX. Oportunidad de review para atraer seguidores.</p>
+                    <p class="text-sm opacity-80 editable-target">La cantante Cachirula grabó su videoclip en una taquería de CDMX. Oportunidad de review para atraer seguidores.</p>
                 </div>
                 <div class="glass p-4 rounded-xl flex-1 min-w-[280px]">
                     <h3 class="text-neonPink text-xs uppercase font-bold tracking-widest mb-1">Público Objetivo</h3>
-                    <p class="text-sm opacity-80">Jóvenes y adultos jóvenes (Clase C- y D+) en México.</p>
+                    <p class="text-sm opacity-80 editable-target">Jóvenes y adultos jóvenes (Clase C- y D+) en México.</p>
                 </div>
                 <div class="glass p-4 rounded-xl flex-1 min-w-[280px]">
                     <h3 class="text-white text-xs uppercase font-bold tracking-widest mb-1">POV</h3>
-                    <p class="text-sm opacity-80">Lugar temático, carne de calidad, buen ambiente, pero precios elevados y cuenta costosa.</p>
+                    <p class="text-sm opacity-80 editable-target">Lugar temático, carne de calidad, buen ambiente, pero precios elevados y cuenta costosa.</p>
                 </div>
             </div>
         </header>
@@ -63,29 +75,29 @@
                 <div class="relative">
                     <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-neonPink flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(254,44,85,0.5)]">01</div>
                     <div class="glass p-6 rounded-2xl">
-                        <h4 class="font-bold text-lg text-neonCyan">0 - 5 seg: El Gancho</h4>
-                        <p class="text-sm opacity-70">Impacto visual inmediato. Comparación rápida entre video musical y realidad. Ritmo frenético.</p>
+                        <h4 class="font-bold text-lg text-neonCyan editable-target">0 - 5 seg: El Gancho</h4>
+                        <p class="text-sm opacity-70 editable-target">Impacto visual inmediato. Comparación rápida entre video musical y realidad. Ritmo frenético.</p>
                     </div>
                 </div>
                 <div class="relative">
                     <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-neonCyan flex items-center justify-center font-bold text-bg shadow-[0_0_15px_rgba(37,244,238,0.5)]">02</div>
                     <div class="glass p-6 rounded-2xl">
-                        <h4 class="font-bold text-lg text-white">5 - 15 seg: El Ambiente</h4>
-                        <p class="text-sm opacity-70">Recorrido dinámico. Enfoque en decoración norteña y frases en paredes para identificación.</p>
+                        <h4 class="font-bold text-lg text-white editable-target">5 - 15 seg: El Ambiente</h4>
+                        <p class="text-sm opacity-70 editable-target">Recorrido dinámico. Enfoque en decoración norteña y frases en paredes para identificación.</p>
                     </div>
                 </div>
                 <div class="relative">
                     <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-white flex items-center justify-center font-bold text-bg">03</div>
                     <div class="glass p-6 rounded-2xl">
-                        <h4 class="font-bold text-lg text-white">15 - 35 seg: Comida y Bebida</h4>
-                        <p class="text-sm opacity-70">Food porn. Carne, barra de aguas y licuachelas. Ritmo constante.</p>
+                        <h4 class="font-bold text-lg text-white editable-target">15 - 35 seg: Comida y Bebida</h4>
+                        <p class="text-sm opacity-70 editable-target">Food porn. Carne, barra de aguas y licuachelas. Ritmo constante.</p>
                     </div>
                 </div>
                 <div class="relative">
                     <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-white flex items-center justify-center font-bold text-bg">04</div>
                     <div class="glass p-6 rounded-2xl">
-                        <h4 class="font-bold text-lg text-white">35 - 50 seg: Precio y Cierre</h4>
-                        <p class="text-sm opacity-70">Revelación del costo. Opinión honesta. Ritmo lento para enfatizar el mensaje.</p>
+                        <h4 class="font-bold text-lg text-white editable-target">35 - 50 seg: Precio y Cierre</h4>
+                        <p class="text-sm opacity-70 editable-target">Revelación del costo. Opinión honesta. Ritmo lento para enfatizar el mensaje.</p>
                     </div>
                 </div>
             </div>
@@ -106,42 +118,175 @@
                     </thead>
                     <tbody class="divide-y divide-borderSubtle">
                         <tr class="row-hover transition-colors">
-                            <td class="p-6 font-medium text-lg leading-relaxed">¿Ya saben donde grabo la Cachirula su ultimo video?</td>
-                            <td class="p-6 italic opacity-80 text-sm">Pantalla dividida: Fragmento del video musical vs Fachada real.</td>
+                            <td class="p-6 font-medium text-lg leading-relaxed editable-target">¿Ya saben donde grabo la Cachirula su ultimo video?</td>
+                            <td class="p-6 italic opacity-80 text-sm editable-target">Pantalla dividida: Fragmento del video musical vs Fachada real.</td>
                         </tr>
                         <tr class="row-hover transition-colors">
-                            <td class="p-6 font-medium text-lg leading-relaxed">¡Lo encontramos y no van a creer lo que cuesta aqui!</td>
-                            <td class="p-6 italic opacity-80 text-sm">Corte rápido a primer plano del creador emocionado.</td>
+                            <td class="p-6 font-medium text-lg leading-relaxed editable-target">¡Lo encontramos y no van a creer lo que cuesta aqui!</td>
+                            <td class="p-6 italic opacity-80 text-sm editable-target">Corte rápido a primer plano del creador emocionado.</td>
                         </tr>
                         <tr class="row-hover transition-colors">
-                            <td class="p-6 font-medium text-lg leading-relaxed">Es una taquería con toda la onda del norte instalada en plena CDMX. Miren nada mas estas frases.</td>
-                            <td class="p-6 italic opacity-80 text-sm">Transición de látigo (whip pan) hacia el interior. Tomas rápidas de letreros.</td>
+                            <td class="p-6 font-medium text-lg leading-relaxed editable-target">Es una taquería con toda la onda del norte instalada en plena CDMX. Miren nada mas estas frases.</td>
+                            <td class="p-6 italic opacity-80 text-sm editable-target">Transición de látigo (whip pan) hacia el interior. Tomas rápidas de letreros.</td>
                         </tr>
                         <tr class="row-hover transition-colors">
-                            <td class="p-6 font-medium text-lg leading-relaxed">Aqui lo que manda es la <span class="text-neonCyan font-bold">CALIDAD</span>. La carne esta de otro nivel, nada de pellejos, pura premium.</td>
-                            <td class="p-6 italic opacity-80 text-sm">Primer plano en camara lenta de carne. Zoom digital al morder el taco.</td>
+                            <td class="p-6 font-medium text-lg leading-relaxed editable-target">Aqui lo que manda es la <span class="text-neonCyan font-bold">CALIDAD</span>. La carne esta de otro nivel, nada de pellejos, pura premium.</td>
+                            <td class="p-6 italic opacity-80 text-sm editable-target">Primer plano en camara lenta de carne. Zoom digital al morder el taco.</td>
                         </tr>
                         <tr class="row-hover transition-colors">
-                            <td class="p-6 font-medium text-lg leading-relaxed">Pero preparen la cartera, porque el antojo sale <span class="text-neonPink font-bold">CARO</span>. La cuenta sube rapido.</td>
-                            <td class="p-6 italic opacity-80 text-sm">Efecto sonido moneda. Texto en pantalla: $$$$. Ticket de pago mostrado.</td>
+                            <td class="p-6 font-medium text-lg leading-relaxed editable-target">Pero preparen la cartera, porque el antojo sale <span class="text-neonPink font-bold">CARO</span>. La cuenta sube rapido.</td>
+                            <td class="p-6 italic opacity-80 text-sm editable-target">Efecto sonido moneda. Texto en pantalla: $$$$. Ticket de pago mostrado.</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- Footer -->
+        <!-- Footer interactivo -->
         <footer class="flex flex-col md:flex-row justify-between items-center gap-6 py-12 border-t border-borderSubtle">
             <div class="flex items-center gap-4">
-                <span class="px-4 py-2 rounded-full bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 text-sm font-bold">En Revisión</span>
+                <span id="statusBadge" class="px-4 py-2 rounded-full bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 text-sm font-bold transition-all">
+                    En Revisión
+                </span>
                 <span class="text-sm opacity-50">Plan v1.2.0</span>
             </div>
-            <div class="flex gap-4">
-                <button class="px-6 py-3 rounded-xl border border-white/20 hover:bg-white/10 transition-all font-semibold">Solicitar Cambios</button>
-                <button class="px-6 py-3 rounded-xl bg-neonPink hover:bg-rose-600 transition-all text-white font-semibold shadow-[0_0_20px_rgba(254,44,85,0.3)]">Aprobar Plan</button>
+            <div class="flex flex-wrap items-center gap-3">
+                <button onclick="toggleComments()" class="px-5 py-3 rounded-xl border border-white/20 hover:bg-white/10 transition-all font-semibold text-sm flex items-center gap-2 text-white">
+                    <span>💬</span> Sugerir Cambios
+                </button>
+                <button onclick="toggleEditMode()" id="btnEdit" class="px-5 py-3 rounded-xl border border-neonCyan/40 text-neonCyan hover:bg-neonCyan/10 transition-all font-semibold text-sm flex items-center gap-2">
+                    <span>✏️</span> Realizar Cambios
+                </button>
+                <button onclick="approvePlan()" id="btnApprove" class="px-6 py-3 rounded-xl bg-neonPink hover:bg-rose-600 transition-all text-white font-semibold text-sm shadow-[0_0_20px_rgba(254,44,85,0.3)]">
+                    Aprobar Plan
+                </button>
+                <button onclick="downloadUpdatedHTML()" class="px-4 py-3 rounded-xl glass hover:bg-white/10 border border-white/20 transition-all text-sm text-neutral-300" title="Descargar archivo HTML con los cambios hechos">
+                    💾 Guardar / Descargar
+                </button>
             </div>
         </footer>
     </main>
 
+    <!-- Barra lateral de Comentarios estilo Google Docs -->
+    <aside id="commentsDrawer" class="fixed top-0 right-0 h-full w-full sm:w-96 glass bg-[#0F0F0F]/95 border-l border-borderSubtle p-6 translate-x-full transition-transform duration-300 z-50 flex flex-col justify-between">
+        <div>
+            <div class="flex items-center justify-between pb-4 border-b border-borderSubtle">
+                <div class="flex items-center gap-2">
+                    <span class="text-neonCyan text-lg">💬</span>
+                    <h3 class="font-bold text-white text-base">Comentarios y Cambios</h3>
+                </div>
+                <button onclick="toggleComments()" class="text-neutral-400 hover:text-white p-1">✕</button>
+            </div>
+
+            <div class="mt-4 space-y-4">
+                <p class="text-xs opacity-60">Escribe aquí las observaciones o correcciones para este guion:</p>
+                <textarea id="commentText" rows="6" placeholder="Ej: En los primeros 5 segundos sugiero cambiar la toma de la fachada por el plato servido para mayor gancho..." class="w-full glass p-3 rounded-xl text-sm text-white focus:outline-none focus:border-neonCyan resize-none placeholder:text-neutral-600"></textarea>
+                <button onclick="addComment()" class="w-full py-2.5 rounded-xl bg-neonCyan text-black font-bold text-xs uppercase tracking-wider hover:opacity-90 transition">
+                    Añadir Nota
+                </button>
+            </div>
+
+            <!-- Listado de comentarios agregados -->
+            <div id="commentsList" class="mt-6 space-y-3 overflow-y-auto max-h-64 pr-1"></div>
+        </div>
+
+        <div class="pt-4 border-t border-borderSubtle">
+            <button onclick="copyAllComments()" class="w-full py-2.5 rounded-xl border border-white/20 text-white hover:bg-white/10 text-xs font-semibold tracking-wider flex items-center justify-center gap-2 transition">
+                <span>📋</span> Copiar todas las notas
+            </button>
+        </div>
+    </aside>
+
+    <!-- Lógica de Interactividad -->
+    <script>
+        let isEditing = false;
+        const statusBadge = document.getElementById('statusBadge');
+        const btnApprove = document.getElementById('btnApprove');
+        const btnEdit = document.getElementById('btnEdit');
+        const editAlert = document.getElementById('editAlert');
+        const commentsDrawer = document.getElementById('commentsDrawer');
+        const commentText = document.getElementById('commentText');
+        const commentsList = document.getElementById('commentsList');
+
+        // 1. APROBAR PLAN
+        function approvePlan() {
+            statusBadge.textContent = '✓ Aprobado';
+            statusBadge.className = 'px-4 py-2 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-sm font-bold shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all';
+            btnApprove.textContent = 'Plan Aprobado';
+            btnApprove.classList.replace('bg-neonPink', 'bg-emerald-600');
+        }
+
+        // 2. MODO REALIZAR CAMBIOS (Editar en pantalla)
+        function toggleEditMode() {
+            isEditing = !isEditing;
+            const targets = document.querySelectorAll('.editable-target, #scriptTitle');
+            
+            targets.forEach(el => {
+                el.contentEditable = isEditing;
+                if (isEditing) {
+                    el.classList.add('editable-active');
+                } else {
+                    el.classList.remove('editable-active');
+                }
+            });
+
+            if (isEditing) {
+                editAlert.classList.remove('hidden');
+                btnEdit.innerHTML = '<span>💾</span> Finalizar Edición';
+                btnEdit.classList.add('bg-neonCyan', 'text-black');
+                btnEdit.classList.remove('text-neonCyan');
+            } else {
+                editAlert.classList.add('hidden');
+                btnEdit.innerHTML = '<span>✏️</span> Realizar Cambios';
+                btnEdit.classList.remove('bg-neonCyan', 'text-black');
+                btnEdit.classList.add('text-neonCyan');
+            }
+        }
+
+        // 3. PANEL DE COMENTARIOS
+        function toggleComments() {
+            commentsDrawer.classList.toggle('translate-x-full');
+        }
+
+        function addComment() {
+            const val = commentText.value.trim();
+            if (!val) return;
+            const div = document.createElement('div');
+            div.className = 'glass p-3 rounded-xl border border-white/10 text-xs space-y-1';
+            div.innerHTML = `
+                <div class="flex justify-between items-center text-[10px] text-neutral-400">
+                    <span class="text-neonCyan font-bold">Observación</span>
+                    <span>Ahora</span>
+                </div>
+                <p class="text-neutral-200">${val}</p>
+            `;
+            commentsList.prepend(div);
+            commentText.value = '';
+        }
+
+        function copyAllComments() {
+            const notes = Array.from(commentsList.querySelectorAll('p')).map(p => '• ' + p.innerText).join('\n');
+            if (!notes) {
+                alert('No hay notas para copiar.');
+                return;
+            }
+            navigator.clipboard.writeText(notes);
+            alert('¡Notas copiadas al portapapeles!');
+        }
+
+        // 4. DESCARGAR ARCHIVO HTML ACTUALIZADO
+        function downloadUpdatedHTML() {
+            // Desactivar temporalmente marcos de edición antes de guardar
+            if (isEditing) toggleEditMode();
+            
+            const fullDoc = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+            const blob = new Blob([fullDoc], { type: 'text/html' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'TikTokCraft-saved.html';
+            a.click();
+            URL.revokeObjectURL(a.href);
+        }
+    </script>
 </body>
 </html>

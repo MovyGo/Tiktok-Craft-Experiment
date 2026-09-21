@@ -172,7 +172,15 @@
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     // Consultar el estado real de los guiones al cargar la portada
-    document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Revisar si la URL pide abrir una carpeta específica (ej: ?folder=daniel)
+      const params = new URLSearchParams(window.location.search);
+      const targetFolder = params.get('folder');
+      if (targetFolder === 'daniel' || targetFolder === 'joel') {
+        openFolder(targetFolder);
+      }
+
+      // 2. Consultar el estado real de Supabase
       const badge = document.getElementById('badgeCachirula');
       try {
         const { data } = await supabaseClient

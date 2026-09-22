@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Review Dashboard | El Camaron Guasaveño</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0F0F0F; color: #ffffff; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .accent-border-pink { border-left: 3px solid #FE2C55; }
+        .accent-border-cyan { border-left: 3px solid #25F4EE; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .sticky-header { position: sticky; top: 0; background: #1a1a1a; z-index: 10; }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+    <div class="max-w-5xl mx-auto space-y-12">
+        
+        <!-- Header Section -->
+        <header class="space-y-6">
+            <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-white leading-tight">
+                ¿Ya conoces la nueva marisquería top de Ecatepec?
+            </h1>
+            
+            <div class="flex flex-wrap gap-4">
+                <div class="glass px-4 py-3 rounded-xl flex items-center gap-3 border-l-4 border-[#FE2C55]">
+                    <span class="text-xs uppercase tracking-widest font-semibold text-gray-400">Contexto</span>
+                    <p class="text-sm">Inauguración de “El camarón Guasaveño” en Ecatepec.</p>
+                </div>
+                <div class="glass px-4 py-3 rounded-xl flex items-center gap-3 border-l-4 border-[#25F4EE]">
+                    <span class="text-xs uppercase tracking-widest font-semibold text-gray-400">Audiencia</span>
+                    <p class="text-sm">Jóvenes y adultos de Ecatepec de Morelos</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Section 1: Vertebral Column -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold flex items-center gap-2">
+                <span class="w-2 h-8 bg-[#FE2C55] rounded-full"></span>
+                Guía Rítmica (Roadmap)
+            </h2>
+            <div class="relative pl-6 border-l border-gray-800 space-y-8">
+                <!-- Timeline Items -->
+                <div class="relative">
+                    <div class="absolute -left-[30px] w-4 h-4 rounded-full bg-[#FE2C55] shadow-[0_0_15px_#FE2C55]"></div>
+                    <p class="text-sm font-bold text-[#FE2C55] mb-1">0-5s</p>
+                    <p class="text-gray-300 italic">Gancho visual impactante con texto llamativo para retener al usuario.</p>
+                </div>
+                <div class="relative">
+                    <div class="absolute -left-[30px] w-4 h-4 rounded-full bg-[#25F4EE] shadow-[0_0_15px_#25F4EE]"></div>
+                    <p class="text-sm font-bold text-[#25F4EE] mb-1">5-15s</p>
+                    <p class="text-gray-300 italic">Introducción al concepto del restaurante y ambiente decorado.</p>
+                </div>
+                <div class="relative">
+                    <div class="absolute -left-[30px] w-4 h-4 rounded-full bg-white"></div>
+                    <p class="text-sm font-bold text-white mb-1">15-45s</p>
+                    <p class="text-gray-300 italic">Reseña detallada de platillos principales.</p>
+                </div>
+                <div class="relative">
+                    <div class="absolute -left-[30px] w-4 h-4 rounded-full bg-white"></div>
+                    <p class="text-sm font-bold text-white mb-1">45-55s</p>
+                    <p class="text-gray-300 italic">Análisis de precios y valor por dinero.</p>
+                </div>
+                <div class="relative">
+                    <div class="absolute -left-[30px] w-4 h-4 rounded-full bg-white"></div>
+                    <p class="text-sm font-bold text-white mb-1">55-60s</p>
+                    <p class="text-gray-300 italic">Recomendación final, logística y cierre.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Production Script -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold flex items-center gap-2">
+                <span class="w-2 h-8 bg-[#25F4EE] rounded-full"></span>
+                Producción (Guion)
+            </h2>
+            <div class="glass overflow-hidden rounded-2xl">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-black/40 border-b border-gray-800">
+                            <th class="p-6 text-sm uppercase tracking-wider font-bold">Guion / Audio</th>
+                            <th class="p-6 text-sm uppercase tracking-wider font-bold">Tomas Sugeridas</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm divide-y divide-gray-800">
+                        <tr class="hover:bg-white/5 transition-colors">
+                            <td class="p-6 font-medium leading-relaxed">¿Ya conoces la nueva marisquería top de Ecatepec?</td>
+                            <td class="p-6 italic text-gray-400">Primer plano de un camarón al coco sumergiéndose en su salsa dulce con un ligero zoom in.</td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition-colors">
+                            <td class="p-6 font-medium leading-relaxed">Nos lanzamos a la inauguración de El Camaron Guasaveño y no podíamos creer lo que vimos.</td>
+                            <td class="p-6 italic text-gray-400">Daniel y su mamá caminando hacia la entrada del restaurante mostrando el logo principal.</td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition-colors">
+                            <td class="p-6 font-medium leading-relaxed">El lugar es enorme, muy bonito y perfecto para venir en familia.</td>
+                            <td class="p-6 italic text-gray-400">Paneo rápido de 180 grados mostrando la decoración interior y la amplitud del local.</td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition-colors">
+                            <td class="p-6 font-medium leading-relaxed">De tomar pedimos esta agua de horchata que estaba súper rica y muy cremosita.</td>
+                            <td class="p-6 italic text-gray-400">Toma de detalle del agua de horchata vertiéndose en el vaso con hielo en cámara lenta.</td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition-colors">
+                            <td class="p-6 font-medium leading-relaxed">De entrada, el aguachile especial. Tiene un toque de tamarindo que jamás había probado, ¡fenomenal!</td>
+                            <td class="p-6 italic text-gray-400 text-[#FE2C55] font-bold">Close up al aguachile, Daniel untando el producto en una tostada.</td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition-colors">
+                            <td class="p-6 font-medium leading-relaxed">Pero mi parte favorita fueron los camarones al coco con trozos de durazno, piña y cereza.</td>
+                            <td class="p-6 italic text-gray-400">Movimiento de cámara tipo slider sobre el plato mostrando el brillo de la salsa dulce.</td>
+                        </tr>
+                        <tr class="hover:bg-white/5 transition-colors">
+                            <td class="p-6 font-medium leading-relaxed">Ningún platillo supera los 300 pesos y por 1017 pesos comen perfectamente tres personas.</td>
+                            <td class="p-6 italic text-gray-400 text-[#25F4EE] font-bold">Texto en pantalla con el costo total mientras se muestra la mesa llena.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="pt-12 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-4">
+                <span class="flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 text-xs font-bold uppercase">
+                    <span class="w-2 h-2 rounded-full bg-yellow-500"></span> In Review
+                </span>
+            </div>
+            <div class="flex gap-4">
+                <button class="px-6 py-2.5 rounded-lg border border-gray-700 hover:border-white transition-all font-semibold">Request Edits</button>
+                <button class="px-6 py-2.5 rounded-lg bg-[#FE2C55] hover:bg-white hover:text-[#FE2C55] transition-all font-semibold">Approve Plan</button>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>

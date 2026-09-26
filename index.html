@@ -91,15 +91,15 @@
             <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl group-hover:scale-105 transition-transform">
               📁
             </div>
-            <span class="px-3 py-1 rounded-full bg-white/10 text-neutral-400 text-xs font-semibold">
-              0 Guiones
+            <span class="px-3 py-1 rounded-full bg-neonPink/10 text-neonPink text-xs font-semibold border border-neonPink/20">
+              1 Guion
             </span>
           </div>
           <div class="mt-6">
             <h3 class="text-2xl font-bold text-white group-hover:text-neonPink transition">Joel</h3>
-            <p class="text-sm opacity-70 mt-1">Línea de contenido automotriz, logística y movilidad urbana.</p>
+            <p class="text-sm opacity-70 mt-1">Línea de contenido educativo, tecnología y desarrollo.</p>
           </div>
-          <div class="mt-6 pt-4 border-t border-borderSubtle flex items-center justify-between text-xs font-semibold text-neutral-400">
+          <div class="mt-6 pt-4 border-t border-borderSubtle flex items-center justify-between text-xs font-semibold text-neonPink">
             <span>Abrir carpeta</span>
             <span class="text-base group-hover:translate-x-1 transition-transform">→</span>
           </div>
@@ -130,11 +130,10 @@
             <div class="space-y-2">
               <div class="flex flex-wrap items-center gap-2">
                 <span class="px-2.5 py-0.5 rounded-full bg-neonPink/10 text-neonPink text-[11px] font-bold border border-neonPink/20">Review / Trend</span>
-                <!-- Badge Dinámica sincronizada con Supabase -->
                 <span id="badgeCachirula" class="px-2.5 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 text-[11px] font-bold border border-yellow-500/20">
                   Cargando...
                 </span>
-                <span class="text-xs opacity-40">50 segundos de ritmo</span>
+                <span class="text-xs opacity-40">50 segundos</span>
               </div>
               <h3 class="text-lg md:text-xl font-bold text-white group-hover:text-neonPink transition">
                 ¡Encontramos los Tacos donde grabó la Cachirula!
@@ -150,23 +149,22 @@
           </div>
         </a>
 
-        <!-- GUION 2: El Camarón Guasaveño -->
-        <a href="daniel/camaron-guasaveno.html" class="script-card glass card-hover p-6 rounded-2xl block transition group border-l-4 border-l-neonCyan">
+        <!-- GUION 2: El Camarón Guasaveño con Mamá (camaronv2.html) -->
+        <a href="daniel/camaronv2.html" class="script-card glass card-hover p-6 rounded-2xl block transition group border-l-4 border-l-neonCyan">
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div class="space-y-2">
               <div class="flex flex-wrap items-center gap-2">
                 <span class="px-2.5 py-0.5 rounded-full bg-neonCyan/10 text-neonCyan text-[11px] font-bold border border-neonCyan/20">Food Review / Ecatepec</span>
-                <!-- Badge Dinámica sincronizada con Supabase -->
-                <span id="badgeCamaron" class="px-2.5 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 text-[11px] font-bold border border-yellow-500/20">
+                <span id="badgeCamaronMama" class="px-2.5 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 text-[11px] font-bold border border-yellow-500/20">
                   Cargando...
                 </span>
-                <span class="text-xs opacity-40">60 segundos de ritmo</span>
+                <span class="text-xs opacity-40">55 segundos</span>
               </div>
               <h3 class="text-lg md:text-xl font-bold text-white group-hover:text-neonCyan transition">
-                ¿Ya conoces la nueva marisquería top de Ecatepec?
+                ¿Los mariscos más grandes de Ecatepec? Traje a mi mamá a la joya: El Camarón Guasaveño
               </h3>
               <p class="text-xs md:text-sm opacity-70 line-clamp-1">
-                Inauguración de “El camarón Guasaveño”. Aguachile de tamarindo, camarones al coco y desglose de cuenta.
+                Daniel y su mamá en la inauguración. Aguachile especial, camarones al coco, pulpo al ajillo y cuenta de 1017 pesos.
               </p>
             </div>
             <div class="flex items-center gap-2 self-end md:self-center shrink-0">
@@ -180,13 +178,32 @@
 
       <!-- LISTADO: Guiones de Joel -->
       <div id="joelScripts" class="hidden space-y-4">
-        <div class="glass p-12 rounded-3xl text-center border-dashed border-white/10 space-y-3">
-          <span class="text-3xl">⏳</span>
-          <h4 class="text-base font-bold text-white">No hay guiones subidos todavía</h4>
-          <p class="text-xs opacity-60 max-w-md mx-auto">
-            Los guiones de Joel aparecerán aquí tan pronto agregues sus archivos HTML a la carpeta <code class="text-neonCyan">joel/</code> en GitHub.
-          </p>
-        </div>
+        
+        <!-- GUION 1 DE JOEL -->
+        <a href="joel/estudiar-programacion.html" class="script-card glass card-hover p-6 rounded-2xl block transition group border-l-4 border-l-neonPink">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="space-y-2">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full bg-neonPink/10 text-neonPink text-[11px] font-bold border border-neonPink/20">Tech / Dev</span>
+                <span id="badgeJoelProg" class="px-2.5 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 text-[11px] font-bold border border-yellow-500/20">
+                  Cargando...
+                </span>
+                <span class="text-xs opacity-40">60 segundos</span>
+              </div>
+              <h3 class="text-lg md:text-xl font-bold text-white group-hover:text-neonPink transition">
+                Lo que nadie te dice antes de estudiar programación
+              </h3>
+              <p class="text-xs md:text-sm opacity-70 line-clamp-1">
+                Realidad laboral, retos iniciales, mitos del aprendizaje y perspectiva técnica de carrera.
+              </p>
+            </div>
+            <div class="flex items-center gap-2 self-end md:self-center shrink-0">
+              <span class="text-xs uppercase font-bold tracking-widest text-neonPink group-hover:underline">Abrir Guion</span>
+              <span class="text-neonPink group-hover:translate-x-1 transition-transform">→</span>
+            </div>
+          </div>
+        </a>
+
       </div>
 
     </section>
@@ -198,7 +215,6 @@
     const SUPABASE_KEY = 'sb_publishable_-g__jgzED6Nue5Lwan917w_rNrftw4j';
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // Consultar el estado real de los guiones al cargar la portada
     document.addEventListener('DOMContentLoaded', async () => {
       // 1. Revisar si la URL pide abrir una carpeta específica (ej: ?folder=daniel)
       const params = new URLSearchParams(window.location.search);
@@ -207,45 +223,33 @@
         openFolder(targetFolder);
       }
 
-      // 2. Consultar estado del Guion 1 (Cachirula)
-      const badgeCachirula = document.getElementById('badgeCachirula');
-      try {
-        const { data } = await supabaseClient
-          .from('script_status')
-          .select('status')
-          .eq('slug', 'tiktok-cachirula')
-          .single();
+      // Helper para actualizar badges
+      async function updateBadge(slug, elementId) {
+        const badge = document.getElementById(elementId);
+        if (!badge) return;
+        try {
+          const { data } = await supabaseClient
+            .from('script_status')
+            .select('status')
+            .eq('slug', slug)
+            .single();
 
-        if (data && data.status === 'Aprobado') {
-          badgeCachirula.textContent = '✓ Aprobado';
-          badgeCachirula.className = 'px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[11px] font-bold border border-emerald-500/40';
-        } else {
-          badgeCachirula.textContent = 'En Revisión';
-          badgeCachirula.className = 'px-2.5 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 text-[11px] font-bold border border-yellow-500/20';
+          if (data && data.status === 'Aprobado') {
+            badge.textContent = '✓ Aprobado';
+            badge.className = 'px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[11px] font-bold border border-emerald-500/40';
+          } else {
+            badge.textContent = 'En Revisión';
+            badge.className = 'px-2.5 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 text-[11px] font-bold border border-yellow-500/20';
+          }
+        } catch (e) {
+          badge.textContent = 'En Revisión';
         }
-      } catch (e) {
-        if (badgeCachirula) badgeCachirula.textContent = 'En Revisión';
       }
 
-      // 3. Consultar estado del Guion 2 (Camarón Guasaveño)
-      const badgeCamaron = document.getElementById('badgeCamaron');
-      try {
-        const { data } = await supabaseClient
-          .from('script_status')
-          .select('status')
-          .eq('slug', 'tiktok-camaron-guasaveno')
-          .single();
-
-        if (data && data.status === 'Aprobado') {
-          badgeCamaron.textContent = '✓ Aprobado';
-          badgeCamaron.className = 'px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[11px] font-bold border border-emerald-500/40';
-        } else {
-          badgeCamaron.textContent = 'En Revisión';
-          badgeCamaron.className = 'px-2.5 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 text-[11px] font-bold border border-yellow-500/20';
-        }
-      } catch (e) {
-        if (badgeCamaron) badgeCamaron.textContent = 'En Revisión';
-      }
+      // Actualizar estados en tiempo real
+      updateBadge('tiktok-cachirula', 'badgeCachirula');
+      updateBadge('tiktok-camaron-mama-ecatepec', 'badgeCamaronMama');
+      updateBadge('tiktok-estudiar-programacion-joel', 'badgeJoelProg');
     });
 
     const foldersView = document.getElementById('foldersView');

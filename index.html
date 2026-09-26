@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Repositorio de Guiones | TikTok Production</title>
+  <title>Repositorio Dinámico | TikTok Production Vault</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Supabase CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -42,7 +42,7 @@
           <h1 class="text-3xl md:text-5xl font-extrabold tracking-tighter text-white mt-1">
             Repositorio de <span class="text-neonPink">Guiones</span>
           </h1>
-          <p class="text-sm opacity-70 mt-1">Base centralizada de libretos, desgloses y roadmaps audiovisuales.</p>
+          <p class="text-sm opacity-70 mt-1">Sincronización automática de libretos vía GitHub API y Supabase.</p>
         </div>
 
         <!-- Buscador -->
@@ -50,7 +50,7 @@
           <input 
             type="text" 
             id="searchInput" 
-            placeholder="Buscar guiones o temas..." 
+            placeholder="Buscar guiones o archivos..." 
             class="w-full glass px-4 py-2.5 rounded-xl text-sm text-white placeholder:text-neutral-500 focus:outline-none focus:border-neonCyan transition"
           >
         </div>
@@ -61,7 +61,7 @@
     <section id="foldersView" class="space-y-6">
       <div>
         <h2 class="text-xl font-bold text-white tracking-tight">Carpetas de Creadores</h2>
-        <p class="text-xs opacity-60">Selecciona una carpeta para ver sus guiones correspondientes.</p>
+        <p class="text-xs opacity-60">Carpetas monitoreadas en tiempo real desde el repositorio.</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -71,13 +71,13 @@
             <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl group-hover:scale-105 transition-transform">
               📁
             </div>
-            <span class="px-3 py-1 rounded-full bg-neonCyan/10 text-neonCyan text-xs font-semibold border border-neonCyan/20">
-              2 Guiones
+            <span id="countDaniel" class="px-3 py-1 rounded-full bg-neonCyan/10 text-neonCyan text-xs font-semibold border border-neonCyan/20">
+              Cargando...
             </span>
           </div>
           <div class="mt-6">
             <h3 class="text-2xl font-bold text-white group-hover:text-neonCyan transition">Daniel</h3>
-            <p class="text-sm opacity-70 mt-1">Guiones de contenido, reseñas y experimentos de engagement.</p>
+            <p class="text-sm opacity-70 mt-1">Guiones de contenido, reseñas y experimentos audiovisuales.</p>
           </div>
           <div class="mt-6 pt-4 border-t border-borderSubtle flex items-center justify-between text-xs font-semibold text-neonCyan">
             <span>Abrir carpeta</span>
@@ -91,13 +91,13 @@
             <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl group-hover:scale-105 transition-transform">
               📁
             </div>
-            <span class="px-3 py-1 rounded-full bg-neonPink/10 text-neonPink text-xs font-semibold border border-neonPink/20">
-              1 Guion
+            <span id="countJoel" class="px-3 py-1 rounded-full bg-neonPink/10 text-neonPink text-xs font-semibold border border-neonPink/20">
+              Cargando...
             </span>
           </div>
           <div class="mt-6">
             <h3 class="text-2xl font-bold text-white group-hover:text-neonPink transition">Joel</h3>
-            <p class="text-sm opacity-70 mt-1">Línea de contenido educativo, tecnología y desarrollo.</p>
+            <p class="text-sm opacity-70 mt-1">Línea de contenido técnico, programación y desarrollo.</p>
           </div>
           <div class="mt-6 pt-4 border-t border-borderSubtle flex items-center justify-between text-xs font-semibold text-neonPink">
             <span>Abrir carpeta</span>
@@ -121,89 +121,14 @@
         </div>
       </div>
 
-      <!-- LISTADO: Guiones de Daniel -->
+      <!-- Contenedor dinámico Daniel -->
       <div id="danielScripts" class="space-y-4">
-        
-        <!-- GUION 1: Cachirula -->
-        <a href="daniel/TikTokCraft-saved.html" class="script-card glass card-hover p-6 rounded-2xl block transition group border-l-4 border-l-neonPink">
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div class="space-y-2">
-              <div class="flex flex-wrap items-center gap-2">
-                <span class="px-2.5 py-0.5 rounded-full bg-neonPink/10 text-neonPink text-[11px] font-bold border border-neonPink/20">Review / Trend</span>
-                <span id="badgeCachirula" class="px-2.5 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 text-[11px] font-bold border border-yellow-500/20">
-                  Cargando...
-                </span>
-                <span class="text-xs opacity-40">50 segundos</span>
-              </div>
-              <h3 class="text-lg md:text-xl font-bold text-white group-hover:text-neonPink transition">
-                ¡Encontramos los Tacos donde grabó la Cachirula!
-              </h3>
-              <p class="text-xs md:text-sm opacity-70 line-clamp-1">
-                Análisis de gancho visual de 0 a 5 seg, desglose rítmico, ambiente norteño y desglose de costo/ticket final.
-              </p>
-            </div>
-            <div class="flex items-center gap-2 self-end md:self-center shrink-0">
-              <span class="text-xs uppercase font-bold tracking-widest text-neonPink group-hover:underline">Abrir Guion</span>
-              <span class="text-neonPink group-hover:translate-x-1 transition-transform">→</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- GUION 2: El Camarón Guasaveño con Mamá (camaronv2.html) -->
-        <a href="daniel/camaronv2.html" class="script-card glass card-hover p-6 rounded-2xl block transition group border-l-4 border-l-neonCyan">
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div class="space-y-2">
-              <div class="flex flex-wrap items-center gap-2">
-                <span class="px-2.5 py-0.5 rounded-full bg-neonCyan/10 text-neonCyan text-[11px] font-bold border border-neonCyan/20">Food Review / Ecatepec</span>
-                <span id="badgeCamaronMama" class="px-2.5 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 text-[11px] font-bold border border-yellow-500/20">
-                  Cargando...
-                </span>
-                <span class="text-xs opacity-40">55 segundos</span>
-              </div>
-              <h3 class="text-lg md:text-xl font-bold text-white group-hover:text-neonCyan transition">
-                ¿Los mariscos más grandes de Ecatepec? Traje a mi mamá a la joya: El Camarón Guasaveño
-              </h3>
-              <p class="text-xs md:text-sm opacity-70 line-clamp-1">
-                Daniel y su mamá en la inauguración. Aguachile especial, camarones al coco, pulpo al ajillo y cuenta de 1017 pesos.
-              </p>
-            </div>
-            <div class="flex items-center gap-2 self-end md:self-center shrink-0">
-              <span class="text-xs uppercase font-bold tracking-widest text-neonCyan group-hover:underline">Abrir Guion</span>
-              <span class="text-neonCyan group-hover:translate-x-1 transition-transform">→</span>
-            </div>
-          </div>
-        </a>
-
+        <div class="text-xs text-neutral-500 italic p-4 glass rounded-xl">Escaneando archivos en GitHub...</div>
       </div>
 
-      <!-- LISTADO: Guiones de Joel -->
+      <!-- Contenedor dinámico Joel -->
       <div id="joelScripts" class="hidden space-y-4">
-        
-        <!-- GUION 1 DE JOEL -->
-        <a href="joel/estudiar-programacion.html" class="script-card glass card-hover p-6 rounded-2xl block transition group border-l-4 border-l-neonPink">
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div class="space-y-2">
-              <div class="flex flex-wrap items-center gap-2">
-                <span class="px-2.5 py-0.5 rounded-full bg-neonPink/10 text-neonPink text-[11px] font-bold border border-neonPink/20">Tech / Dev</span>
-                <span id="badgeJoelProg" class="px-2.5 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 text-[11px] font-bold border border-yellow-500/20">
-                  Cargando...
-                </span>
-                <span class="text-xs opacity-40">60 segundos</span>
-              </div>
-              <h3 class="text-lg md:text-xl font-bold text-white group-hover:text-neonPink transition">
-                Lo que nadie te dice antes de estudiar programación
-              </h3>
-              <p class="text-xs md:text-sm opacity-70 line-clamp-1">
-                Realidad laboral, retos iniciales, mitos del aprendizaje y perspectiva técnica de carrera.
-              </p>
-            </div>
-            <div class="flex items-center gap-2 self-end md:self-center shrink-0">
-              <span class="text-xs uppercase font-bold tracking-widest text-neonPink group-hover:underline">Abrir Guion</span>
-              <span class="text-neonPink group-hover:translate-x-1 transition-transform">→</span>
-            </div>
-          </div>
-        </a>
-
+        <div class="text-xs text-neutral-500 italic p-4 glass rounded-xl">Escaneando archivos en GitHub...</div>
       </div>
 
     </section>
@@ -211,46 +136,145 @@
   </main>
 
   <script>
+    const GITHUB_REPO = 'MovyGo/Tiktok-Craft-Experiment';
     const SUPABASE_URL = 'https://rvzwttbazggsmlhubkdd.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_-g__jgzED6Nue5Lwan917w_rNrftw4j';
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+    // Mapeo conocido de slugs y títulos específicos para visualización limpia
+    const SCRIPT_METADATA = {
+      'TikTokCraft-saved.html': { title: '¡Encontramos los Tacos donde grabó la Cachirula!', slug: 'tiktok-cachirula', tag: 'Review / Trend', desc: 'Análisis de gancho visual de 0 a 5 seg, ambiente norteño y desglose de cuenta.' },
+      'camaronv2.html': { title: '¿Los mariscos más grandes de Ecatepec? Traje a mi mamá', slug: 'tiktok-camaron-mama-ecatepec', tag: 'Food Review / Ecatepec', desc: 'Inauguración de El Camarón Guasaveño. Aguachile especial y cuenta de 1017 pesos.' },
+      'camaronv3.html': { title: 'TikTok Production Dashboard - El secreto mejor guardado de Ecatepec', slug: 'tiktok-secreto-ecatepec', tag: 'Food Discovery', desc: 'Exploración gastronómica completa generada por Gem y lista para producción.' },
+      'estudiar-programacion.html': { title: 'Lo que nadie te dice antes de estudiar programación', slug: 'tiktok-estudiar-programacion-joel', tag: 'Tech / Dev', desc: 'Realidad laboral, mitos del aprendizaje y perspectiva técnica de carrera.' }
+    };
+
+    let cacheData = { daniel: [], joel: [] };
+
     document.addEventListener('DOMContentLoaded', async () => {
-      // 1. Revisar si la URL pide abrir una carpeta específica (ej: ?folder=daniel)
+      // 1. Leer parámetros URL
       const params = new URLSearchParams(window.location.search);
       const targetFolder = params.get('folder');
       if (targetFolder === 'daniel' || targetFolder === 'joel') {
         openFolder(targetFolder);
       }
 
-      // Helper para actualizar badges
-      async function updateBadge(slug, elementId) {
-        const badge = document.getElementById(elementId);
-        if (!badge) return;
-        try {
-          const { data } = await supabaseClient
-            .from('script_status')
-            .select('status')
-            .eq('slug', slug)
-            .single();
+      // 2. Cargar dinámicamente ambas carpetas
+      await Promise.all([
+        loadFolderScripts('daniel', 'danielScripts', 'countDaniel', 'neonCyan'),
+        loadFolderScripts('joel', 'joelScripts', 'countJoel', 'neonPink')
+      ]);
+    });
 
-          if (data && data.status === 'Aprobado') {
-            badge.textContent = '✓ Aprobado';
-            badge.className = 'px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[11px] font-bold border border-emerald-500/40';
-          } else {
-            badge.textContent = 'En Revisión';
-            badge.className = 'px-2.5 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 text-[11px] font-bold border border-yellow-500/20';
-          }
-        } catch (e) {
-          badge.textContent = 'En Revisión';
-        }
+    async function loadFolderScripts(creator, containerId, countId, accentColor) {
+      const container = document.getElementById(containerId);
+      const counter = document.getElementById(countId);
+
+      try {
+        const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${creator}`);
+        if (!response.ok) throw new Error('GitHub API Limit or Network');
+        const files = await response.json();
+
+        // Filtrar solo los archivos .html válidos
+        const htmlFiles = files.filter(f => f.type === 'file' && f.name.endsWith('.html'));
+        cacheData[creator] = htmlFiles;
+        
+        counter.textContent = `${htmlFiles.length} ${htmlFiles.length === 1 ? 'Guion' : 'Guiones'}`;
+        renderCardList(htmlFiles, creator, container, accentColor);
+
+      } catch (err) {
+        console.warn(`Fallback local activado para ${creator}:`, err);
+        // Fallback garantizado en caso de límite de peticiones de GitHub
+        const fallbackList = creator === 'daniel' 
+          ? [{ name: 'TikTokCraft-saved.html' }, { name: 'camaronv2.html' }, { name: 'camaronv3.html' }]
+          : [{ name: 'estudiar-programacion.html' }];
+        
+        counter.textContent = `${fallbackList.length} ${fallbackList.length === 1 ? 'Guion' : 'Guiones'}`;
+        renderCardList(fallbackList, creator, container, accentColor);
+      }
+    }
+
+    function renderCardList(files, creator, container, accent) {
+      if (files.length === 0) {
+        container.innerHTML = '<div class="glass p-6 rounded-2xl text-center text-xs opacity-60">No hay guiones en esta carpeta todavía.</div>';
+        return;
       }
 
-      // Actualizar estados en tiempo real
-      updateBadge('tiktok-cachirula', 'badgeCachirula');
-      updateBadge('tiktok-camaron-mama-ecatepec', 'badgeCamaronMama');
-      updateBadge('tiktok-estudiar-programacion-joel', 'badgeJoelProg');
-    });
+      container.innerHTML = '';
+      files.forEach(file => {
+        const meta = SCRIPT_METADATA[file.name] || formatAutoMetadata(file.name);
+        const borderClass = accent === 'neonCyan' ? 'border-l-neonCyan' : 'border-l-neonPink';
+        const textClass = accent === 'neonCyan' ? 'text-neonCyan' : 'text-neonPink';
+        const bgClass = accent === 'neonCyan' ? 'bg-neonCyan/10 text-neonCyan border-neonCyan/20' : 'bg-neonPink/10 text-neonPink border-neonPink/20';
+        const badgeId = `badge-${creator}-${file.name.replace(/[^a-zA-Z0-9]/g, '')}`;
+
+        const card = document.createElement('a');
+        card.href = `${creator}/${file.name}`;
+        card.className = `script-card glass card-hover p-6 rounded-2xl block transition group border-l-4 ${borderClass}`;
+        card.innerHTML = `
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="space-y-2">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full ${bgClass} text-[11px] font-bold border">${meta.tag}</span>
+                <span id="${badgeId}" class="px-2.5 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 text-[11px] font-bold border border-yellow-500/20">
+                  Cargando...
+                </span>
+                <span class="text-xs opacity-40 font-mono">${file.name}</span>
+              </div>
+              <h3 class="text-lg md:text-xl font-bold text-white group-hover:${textClass} transition">
+                ${meta.title}
+              </h3>
+              <p class="text-xs md:text-sm opacity-70 line-clamp-1">
+                ${meta.desc}
+              </p>
+            </div>
+            <div class="flex items-center gap-2 self-end md:self-center shrink-0">
+              <span class="text-xs uppercase font-bold tracking-widest ${textClass} group-hover:underline">Abrir Guion</span>
+              <span class="${textClass} group-hover:translate-x-1 transition-transform">→</span>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+
+        // Consultar estado en Supabase
+        fetchBadgeStatus(meta.slug, badgeId);
+      });
+    }
+
+    // Generador inteligente de títulos para archivos nuevos que subas
+    function formatAutoMetadata(filename) {
+      const cleanName = filename.replace('.html', '').replace(/[-_]/g, ' ');
+      const formattedTitle = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+      const autoSlug = 'tiktok-' + filename.replace('.html', '').toLowerCase();
+      return {
+        title: formattedTitle,
+        slug: autoSlug,
+        tag: 'Producción',
+        desc: 'Guion interactivo disponible para revisión técnica y rodaje.'
+      };
+    }
+
+    async function fetchBadgeStatus(slug, elementId) {
+      const badge = document.getElementById(elementId);
+      if (!badge) return;
+      try {
+        const { data } = await supabaseClient
+          .from('script_status')
+          .select('status')
+          .eq('slug', slug)
+          .single();
+
+        if (data && data.status === 'Aprobado') {
+          badge.textContent = '✓ Aprobado';
+          badge.className = 'px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[11px] font-bold border border-emerald-500/40';
+        } else {
+          badge.textContent = 'En Revisión';
+          badge.className = 'px-2.5 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 text-[11px] font-bold border border-yellow-500/20';
+        }
+      } catch (e) {
+        badge.textContent = 'En Revisión';
+      }
+    }
 
     const foldersView = document.getElementById('foldersView');
     const scriptsView = document.getElementById('scriptsView');

@@ -1,21 +1,15 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok Production Dashboard - El secreto mejor guardado de Ecatepec</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-    
-    <!-- Supabase JS Client v2 -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- Tailwind CSS CDN -->
+    <title>TikTok Production Dashboard | El Camarón Guasaveño</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -24,649 +18,475 @@
                         neonPink: '#FE2C55',
                         neonCyan: '#25F4EE',
                         borderSubtle: 'rgba(255, 255, 255, 0.1)'
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace']
                     }
                 }
             }
         }
     </script>
-
     <style>
-        body {
-            background-color: #0F0F0F;
-            font-family: 'Inter', sans-serif;
-            color: #EDEDED;
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(254, 44, 85, 0.04) 0%, transparent 40%),
-                radial-gradient(circle at 85% 85%, rgba(37, 244, 238, 0.03) 0%, transparent 40%);
-            background-attachment: fixed;
-        }
-
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .glass-panel-subtle {
-            background: rgba(255, 255, 255, 0.015);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .editable-target {
-            transition: all 0.2s ease;
-            outline: none;
-            border-radius: 4px;
-        }
-
-        body.is-editing .editable-target {
-            background-color: rgba(37, 244, 238, 0.06);
-            box-shadow: 0 0 0 1px rgba(37, 244, 238, 0.35);
-            padding: 2px 6px;
-            cursor: text;
-        }
-
-        body.is-editing .editable-target:hover {
-            box-shadow: 0 0 0 1px #25F4EE;
-            background-color: rgba(37, 244, 238, 0.12);
-        }
-
-        body.is-editing .editable-target:focus {
-            box-shadow: 0 0 0 2px #25F4EE, 0 0 12px rgba(37, 244, 238, 0.3);
-            background-color: rgba(37, 244, 238, 0.15);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0F0F0F;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 9999px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #0F0F0F; color: #E5E5E5; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .timeline-line::before { content: ''; position: absolute; left: 19px; top: 0; bottom: 0; width: 2px; background: rgba(37, 244, 238, 0.3); z-index: 0; }
+        .row-hover:hover { background: rgba(255, 255, 255, 0.06); }
+        .editable-active { outline: 2px dashed #25F4EE; outline-offset: 4px; border-radius: 6px; cursor: text; }
     </style>
 </head>
-<body class="min-h-screen text-[#EDEDED] flex flex-col relative pb-20">
+<body class="p-4 md:p-8 relative min-h-screen">
 
-    <!-- Top Action Bar -->
-    <header class="sticky top-0 z-40 border-b border-[rgba(255,255,255,0.08)] bg-[#0F0F0F]/80 backdrop-blur-xl">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <a href="../index.html?folder=daniel" class="text-xs uppercase tracking-widest font-mono text-zinc-400 hover:text-white transition-colors flex items-center gap-2">
-                    <span class="text-[#25F4EE]">←</span> Volver a la Carpeta
-                </a>
-                <span class="h-4 w-px bg-zinc-800 hidden sm:block"></span>
-                <span class="text-xs font-mono text-zinc-500 uppercase tracking-wider hidden sm:block">tiktok-camaron-mama-ecatepec</span>
-            </div>
-
-            <!-- Controls -->
-            <div class="flex items-center gap-2.5 sm:gap-3">
-                <div id="statusBadge" class="px-2.5 py-1 rounded-full text-xs font-mono font-medium tracking-wide border border-amber-500/30 bg-amber-500/10 text-amber-300">
-                    En Revisión
-                </div>
-
-                <button id="btnSuggest" class="px-3.5 py-1.5 rounded-lg text-xs font-medium border border-borderSubtle bg-card hover:bg-white/[0.06] text-zinc-300 hover:text-white transition-all flex items-center gap-1.5">
-                    <svg class="w-3.5 h-3.5 text-[#25F4EE]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
-                    <span>Sugerir Cambios</span>
-                </button>
-
-                <button id="btnEdit" class="px-3.5 py-1.5 rounded-lg text-xs font-medium border border-[#25F4EE]/40 bg-[#25F4EE]/10 hover:bg-[#25F4EE]/20 text-[#25F4EE] transition-all flex items-center gap-1.5 shadow-[0_0_12px_rgba(37,244,238,0.15)]">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                    <span id="btnEditText">Realizar Cambios</span>
-                </button>
-
-                <button id="btnApprove" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#FE2C55] hover:bg-[#e02449] text-white transition-all shadow-[0_0_15px_rgba(254,44,85,0.35)] flex items-center gap-1.5">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                    <span>Aprobar Plan</span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Container -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-10 w-full flex-1">
-        
-        <!-- Hero Title Section -->
-        <section class="glass-panel rounded-2xl p-6 sm:p-8 border border-white/10 relative overflow-hidden">
-            <div class="absolute -right-20 -top-20 w-64 h-64 bg-[#FE2C55]/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="space-y-3 relative z-10">
-                <div class="flex items-center gap-2">
-                    <span class="h-2 w-2 rounded-full bg-[#FE2C55] animate-ping"></span>
-                    <span class="text-xs uppercase tracking-widest font-mono text-[#FE2C55] font-semibold">TikTok Production Review • Daniel</span>
-                </div>
-                <h1 data-key="title" class="editable-target text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
-                    El secreto mejor guardado de Ecatepec: Mariscos increíbles por menos de 300 pesos
-                </h1>
-            </div>
-        </section>
-
-        <!-- Strategic Context Meta -->
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="glass-panel p-5 rounded-xl border border-white/5 space-y-2 hover:border-white/15 transition-all">
-                <span class="text-[11px] font-mono uppercase tracking-wider text-zinc-400 font-semibold block">Contexto del Video</span>
-                <p data-key="context" class="editable-target text-xs sm:text-sm text-zinc-300 leading-relaxed">
-                    Daniel visita junto a su madre la inauguración de la marisquería El Camarón Guasaveño en Ecatepec, evaluando platillos abundantes, ambiente y precios accesibles.
-                </p>
-            </div>
-            <div class="glass-panel p-5 rounded-xl border border-white/5 space-y-2 hover:border-white/15 transition-all">
-                <span class="text-[11px] font-mono uppercase tracking-wider text-[#25F4EE] font-semibold block">Target</span>
-                <p data-key="target" class="editable-target text-xs sm:text-sm text-zinc-300 leading-relaxed">
-                    Jóvenes y adultos residentes de Ecatepec de Morelos interesados en recomendaciones gastronómicas locales y familiares.
-                </p>
-            </div>
-            <div class="glass-panel p-5 rounded-xl border border-white/5 space-y-2 hover:border-white/15 transition-all">
-                <span class="text-[11px] font-mono uppercase tracking-wider text-[#FE2C55] font-semibold block">POV</span>
-                <p data-key="pov" class="editable-target text-xs sm:text-sm text-zinc-300 leading-relaxed">
-                    Perspectiva entusiasta y amigable de un creador que descubre una joya culinaria en su zona, validando la calidad-precio mediante una experiencia real y familiar.
-                </p>
-            </div>
-            <div class="glass-panel p-5 rounded-xl border border-white/5 space-y-2 hover:border-white/15 transition-all flex flex-col justify-between">
-                <span class="text-[11px] font-mono uppercase tracking-wider text-zinc-400 font-semibold block">Duración Estimada Total</span>
-                <div class="flex items-baseline gap-2">
-                    <span data-key="duration" class="editable-target text-3xl font-extrabold font-mono text-white tracking-tight">55 segundos</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Pacing Roadmap -->
-        <section class="space-y-4">
-            <div class="flex items-center justify-between">
-                <h2 class="text-sm uppercase tracking-widest font-mono text-zinc-400 font-bold flex items-center gap-2">
-                    <span class="w-1.5 h-3.5 bg-[#25F4EE] rounded-sm"></span>
-                    Guía Rítmica (Pacing Roadmap)
-                </h2>
-                <span class="text-xs text-zinc-500 font-mono">6 segmentos estructurados</span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                <!-- Segment 1 -->
-                <div class="glass-panel-subtle p-4 rounded-xl border border-white/5 space-y-2 hover:bg-white/[0.04] transition-all">
-                    <div class="flex items-center justify-between text-xs font-mono">
-                        <span class="text-zinc-500 font-bold">SEGMENTO 1</span>
-                        <span data-key="rhythm-t1" class="editable-target px-2 py-0.5 rounded bg-zinc-800 text-[#25F4EE]">0-6s</span>
-                    </div>
-                    <h3 data-key="rhythm-title1" class="editable-target text-sm font-semibold text-white">El Gancho de la Joyita</h3>
-                    <p data-key="rhythm-desc1" class="editable-target text-xs text-zinc-400 leading-relaxed">
-                        Primer plano de los camarones al coco con frutas y el ticket final mientras Daniel dice que encontró el mejor lugar de mariscos en Ecatepec.
-                    </p>
-                </div>
-
-                <!-- Segment 2 -->
-                <div class="glass-panel-subtle p-4 rounded-xl border border-white/5 space-y-2 hover:bg-white/[0.04] transition-all">
-                    <div class="flex items-center justify-between text-xs font-mono">
-                        <span class="text-zinc-500 font-bold">SEGMENTO 2</span>
-                        <span data-key="rhythm-t2" class="editable-target px-2 py-0.5 rounded bg-zinc-800 text-[#25F4EE]">6-12s</span>
-                    </div>
-                    <h3 data-key="rhythm-title2" class="editable-target text-sm font-semibold text-white">El Ambiente y Contexto</h3>
-                    <p data-key="rhythm-desc2" class="editable-target text-xs text-zinc-400 leading-relaxed">
-                        Paneos rápidos de las instalaciones amplias y decoradas mencionando que es un lugar nuevo y muy bonito para ir en familia.
-                    </p>
-                </div>
-
-                <!-- Segment 3 -->
-                <div class="glass-panel-subtle p-4 rounded-xl border border-white/5 space-y-2 hover:bg-white/[0.04] transition-all">
-                    <div class="flex items-center justify-between text-xs font-mono">
-                        <span class="text-zinc-500 font-bold">SEGMENTO 3</span>
-                        <span data-key="rhythm-t3" class="editable-target px-2 py-0.5 rounded bg-zinc-800 text-[#25F4EE]">12-22s</span>
-                    </div>
-                    <h3 data-key="rhythm-title3" class="editable-target text-sm font-semibold text-white">El Aguachile Especial</h3>
-                    <p data-key="rhythm-desc3" class="editable-target text-xs text-zinc-400 leading-relaxed">
-                        Toma detallada del aguachile de tamarindo y sonido ASMR de una tostada crujiendo mientras se describe el balance cítrico y salado.
-                    </p>
-                </div>
-
-                <!-- Segment 4 -->
-                <div class="glass-panel-subtle p-4 rounded-xl border border-white/5 space-y-2 hover:bg-white/[0.04] transition-all">
-                    <div class="flex items-center justify-between text-xs font-mono">
-                        <span class="text-zinc-500 font-bold">SEGMENTO 4</span>
-                        <span data-key="rhythm-t4" class="editable-target px-2 py-0.5 rounded bg-zinc-800 text-[#25F4EE]">22-35s</span>
-                    </div>
-                    <h3 data-key="rhythm-title4" class="editable-target text-sm font-semibold text-white">Reacciones y Sabores</h3>
-                    <p data-key="rhythm-desc4" class="editable-target text-xs text-zinc-400 leading-relaxed">
-                        Daniel prueba los camarones al coco resaltando la salsa dulce y luego su mamá da su opinión sobre el pulpo al ajillo y su intenso sabor a ajo.
-                    </p>
-                </div>
-
-                <!-- Segment 5 -->
-                <div class="glass-panel-subtle p-4 rounded-xl border border-white/5 space-y-2 hover:bg-white/[0.04] transition-all">
-                    <div class="flex items-center justify-between text-xs font-mono">
-                        <span class="text-zinc-500 font-bold">SEGMENTO 5</span>
-                        <span data-key="rhythm-t5" class="editable-target px-2 py-0.5 rounded bg-zinc-800 text-[#25F4EE]">35-45s</span>
-                    </div>
-                    <h3 data-key="rhythm-title5" class="editable-target text-sm font-semibold text-white">Transparencia de Precios</h3>
-                    <p data-key="rhythm-desc5" class="editable-target text-xs text-zinc-400 leading-relaxed">
-                        Muestra de la mesa llena con los tres platos gigantes resaltando que ninguno supera los 300 pesos y que la cuenta total fue de 1017 pesos.
-                    </p>
-                </div>
-
-                <!-- Segment 6 -->
-                <div class="glass-panel-subtle p-4 rounded-xl border border-white/5 space-y-2 hover:bg-white/[0.04] transition-all">
-                    <div class="flex items-center justify-between text-xs font-mono">
-                        <span class="text-zinc-500 font-bold">SEGMENTO 6</span>
-                        <span data-key="rhythm-t6" class="editable-target px-2 py-0.5 rounded bg-zinc-800 text-[#25F4EE]">45-55s</span>
-                    </div>
-                    <h3 data-key="rhythm-title6" class="editable-target text-sm font-semibold text-white">El Consejo Final</h3>
-                    <p data-key="rhythm-desc6" class="editable-target text-xs text-zinc-400 leading-relaxed">
-                        Toma de la fila enorme afuera del restaurante al salir con recomendación de llegar temprano y mención del valet parking.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Production Table -->
-        <section class="space-y-4">
-            <div class="flex items-center justify-between">
-                <h2 class="text-sm uppercase tracking-widest font-mono text-zinc-400 font-bold flex items-center gap-2">
-                    <span class="w-1.5 h-3.5 bg-[#FE2C55] rounded-sm"></span>
-                    Desglose Técnico de Producción
-                </h2>
-                <span class="text-xs text-zinc-500 font-mono">Guion • Acotación • Tomas</span>
-            </div>
-
-            <div class="glass-panel rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse min-w-[720px]">
-                        <thead>
-                            <tr class="border-b border-white/10 bg-white/[0.02]">
-                                <th class="py-3.5 px-5 text-xs font-mono font-semibold uppercase tracking-wider text-zinc-400 w-5/12">Guion / Audio</th>
-                                <th class="py-3.5 px-4 text-xs font-mono font-semibold uppercase tracking-wider text-zinc-400 w-2/12">Acotación</th>
-                                <th class="py-3.5 px-5 text-xs font-mono font-semibold uppercase tracking-wider text-zinc-400 w-5/12">Tomas de Video</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-white/5 text-sm">
-                            <!-- Row 1 -->
-                            <tr class="hover:bg-white/[0.02] transition-colors">
-                                <td class="py-4 px-5 align-top">
-                                    <p data-key="r1-audio" class="editable-target text-white font-medium leading-relaxed">
-                                        ¡No dejen que se los cuenten! Encontré la verdadera joyita de mariscos en todo Ecatepec. Chequen estos camarones al coco y lo mejor es el precio que ven aquí.
-                                    </p>
-                                </td>
-                                <td class="py-4 px-4 align-top">
-                                    <span data-key="r1-note" class="editable-target inline-block px-2.5 py-1 rounded text-xs font-mono bg-zinc-800/80 text-zinc-300 border border-zinc-700/60">
-                                        [Entusiasta + Dinámico + Medio]
-                                    </span>
-                                </td>
-                                <td class="py-4 px-5 align-top">
-                                    <p data-key="r1-vis" class="editable-target text-zinc-400 leading-relaxed">
-                                        Primer plano detalle de los camarones al coco decorados con fruta jugosa, seguido de un inserto rápido del ticket final con el monto resaltado.
-                                    </p>
-                                </td>
-                            </tr>
-
-                            <!-- Row 2 -->
-                            <tr class="hover:bg-white/[0.02] transition-colors">
-                                <td class="py-4 px-5 align-top">
-                                    <p data-key="r2-audio" class="editable-target text-white font-medium leading-relaxed">
-                                        Se llama El Camarón Guasaveño. Es un lugar nuevo, súper amplio y con una decoración bien bonita, perfecto para traer a toda la familia el fin de semana.
-                                    </p>
-                                </td>
-                                <td class="py-4 px-4 align-top">
-                                    <span data-key="r2-note" class="editable-target inline-block px-2.5 py-1 rounded text-xs font-mono bg-zinc-800/80 text-zinc-300 border border-zinc-700/60">
-                                        [Amigable + Fluido + Medio]
-                                    </span>
-                                </td>
-                                <td class="py-4 px-5 align-top">
-                                    <p data-key="r2-vis" class="editable-target text-zinc-400 leading-relaxed">
-                                        Paneos rápidos (whip pans) mostrando las instalaciones amplias, las mesas decoradas y el ambiente vibrante del restaurante lleno de gente.
-                                    </p>
-                                </td>
-                            </tr>
-
-                            <!-- Row 3 -->
-                            <tr class="hover:bg-white/[0.02] transition-colors">
-                                <td class="py-4 px-5 align-top">
-                                    <p data-key="r3-audio" class="editable-target text-white font-medium leading-relaxed">
-                                        Pero la estrella fue este aguachile de tamarindo. El balance entre lo cítrico y lo saladito es una locura total. (Sonido de crunch) ¡Ese crujido lo dice todo!
-                                    </p>
-                                </td>
-                                <td class="py-4 px-4 align-top">
-                                    <span data-key="r3-note" class="editable-target inline-block px-2.5 py-1 rounded text-xs font-mono bg-zinc-800/80 text-zinc-300 border border-zinc-700/60">
-                                        [Emocionado + Pausado + Medio]
-                                    </span>
-                                </td>
-                                <td class="py-4 px-5 align-top">
-                                    <p data-key="r3-vis" class="editable-target text-zinc-400 leading-relaxed">
-                                        Toma detallada (Extreme Close Up) del aguachile bañándose en salsa de tamarindo. Primer plano de Daniel mordiendo una tostada con sonido de crujido resaltado.
-                                    </p>
-                                </td>
-                            </tr>
-
-                            <!-- Row 4 -->
-                            <tr class="hover:bg-white/[0.02] transition-colors">
-                                <td class="py-4 px-5 align-top">
-                                    <p data-key="r4-audio" class="editable-target text-white font-medium leading-relaxed">
-                                        Los camarones al coco con esa salsita dulce son de otro planeta. Y mi mamá aprobó el pulpo al ajillo; dice que tiene un sabor a ajo súper intenso y delicioso.
-                                    </p>
-                                </td>
-                                <td class="py-4 px-4 align-top">
-                                    <span data-key="r4-note" class="editable-target inline-block px-2.5 py-1 rounded text-xs font-mono bg-zinc-800/80 text-zinc-300 border border-zinc-700/60">
-                                        [Alegre + Dinámico + Medio]
-                                    </span>
-                                </td>
-                                <td class="py-4 px-5 align-top">
-                                    <p data-key="r4-vis" class="editable-target text-zinc-400 leading-relaxed">
-                                        Daniel probando los camarones con gesto de aprobación total. Corte a su madre probando el pulpo al ajillo y dando su veredicto positivo frente a cámara.
-                                    </p>
-                                </td>
-                            </tr>
-
-                            <!-- Row 5 -->
-                            <tr class="hover:bg-white/[0.02] transition-colors">
-                                <td class="py-4 px-5 align-top">
-                                    <p data-key="r5-audio" class="editable-target text-white font-medium leading-relaxed">
-                                        Vean nada más esta mesa llena. Lo más sorprendente es que ningún plato gigante pasó de los 300 pesos. Por los tres platazos y bebidas solo pagamos 1017 pesos.
-                                    </p>
-                                </td>
-                                <td class="py-4 px-4 align-top">
-                                    <span data-key="r5-note" class="editable-target inline-block px-2.5 py-1 rounded text-xs font-mono bg-zinc-800/80 text-zinc-300 border border-zinc-700/60">
-                                        [Sorprendido + Marcado + Alto]
-                                    </span>
-                                </td>
-                                <td class="py-4 px-5 align-top">
-                                    <p data-key="r5-vis" class="editable-target text-zinc-400 leading-relaxed">
-                                        Plano cenital (top down) de la mesa completa con los tres platos masivos y la jarra de horchata cremosa. Zoom digital al ticket de la cuenta para mostrar la transparencia.
-                                    </p>
-                                </td>
-                            </tr>
-
-                            <!-- Row 6 -->
-                            <tr class="hover:bg-white/[0.02] transition-colors">
-                                <td class="py-4 px-5 align-top">
-                                    <p data-key="r6-audio" class="editable-target text-white font-medium leading-relaxed">
-                                        Mi consejo: lleguen temprano porque al salir la fila estaba enorme. Tienen valet parking para que no batallen. ¡Es un 10 de 10, tienen que probarlo!
-                                    </p>
-                                </td>
-                                <td class="py-4 px-4 align-top">
-                                    <span data-key="r6-note" class="editable-target inline-block px-2.5 py-1 rounded text-xs font-mono bg-zinc-800/80 text-zinc-300 border border-zinc-700/60">
-                                        [Sugerente + Rápido + Medio]
-                                    </span>
-                                </td>
-                                <td class="py-4 px-5 align-top">
-                                    <p data-key="r6-vis" class="editable-target text-zinc-400 leading-relaxed">
-                                        Toma de la fachada del restaurante mostrando la fila de personas esperando afuera. Daniel frente a cámara dando la recomendación final con pulgar arriba.
-                                    </p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Slide-over Comments Drawer -->
-    <div id="commentsDrawer" class="fixed inset-y-0 right-0 max-w-full flex pl-10 z-50 transform translate-x-full transition-transform duration-300 ease-in-out">
-        <div class="w-screen max-w-md bg-[#141414] border-l border-white/10 p-6 flex flex-col justify-between shadow-2xl backdrop-blur-2xl">
-            <div class="space-y-6 flex-1 flex flex-col overflow-hidden">
-                <!-- Drawer Header -->
-                <div class="flex items-center justify-between pb-4 border-b border-white/10">
-                    <div>
-                        <h3 class="text-base font-bold text-white flex items-center gap-2">
-                            <span>Sugerencias & Feedback</span>
-                        </h3>
-                        <p class="text-xs text-zinc-400 mt-0.5">Comentarios vinculados a este guion</p>
-                    </div>
-                    <button id="btnCloseDrawer" class="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                    </button>
-                </div>
-
-                <!-- Comments List -->
-                <div id="commentsList" class="flex-1 overflow-y-auto space-y-3 pr-1">
-                    <div class="text-xs text-zinc-500 font-mono text-center py-8">Cargando comentarios...</div>
-                </div>
-
-                <!-- Comment Input Area -->
-                <div class="pt-4 border-t border-white/10 space-y-3">
-                    <input id="commentAuthor" type="text" placeholder="Tu nombre o rol (ej. Editor, Daniel)" class="w-full bg-[#1e1e1e] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#25F4EE]">
-                    <textarea id="commentText" rows="3" placeholder="Escribe aquí tu sugerencia o cambio..." class="w-full bg-[#1e1e1e] border border-white/10 rounded-lg p-3 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#25F4EE] resize-none"></textarea>
-                    <button id="btnSubmitComment" class="w-full py-2 bg-[#25F4EE] hover:bg-[#1fd3ce] text-black font-semibold rounded-lg text-xs transition-all shadow-[0_0_12px_rgba(37,244,238,0.2)]">
-                        Publicar Sugerencia
-                    </button>
-                </div>
-            </div>
+    <!-- Barra de regreso -->
+    <div class="max-w-6xl mx-auto mb-6 flex flex-wrap items-center justify-between gap-3">
+        <a href="../index.html?folder=daniel" class="flex items-center gap-2 px-4 py-2 rounded-xl glass hover:bg-white/10 text-xs uppercase tracking-widest font-semibold text-white transition">
+            <span>←</span> Volver a la Carpeta
+        </a>
+        <div id="editAlert" class="hidden text-xs bg-neonCyan/10 border border-neonCyan/30 text-neonCyan px-3 py-1.5 rounded-lg flex items-center gap-2">
+            <span>✏️ Modo edición activo: Haz clic sobre cualquier texto para modificarlo.</span>
         </div>
     </div>
 
-    <!-- Backdrop for Drawer -->
-    <div id="drawerBackdrop" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden transition-opacity"></div>
+    <main class="max-w-6xl mx-auto space-y-12">
+        <!-- Header -->
+        <header class="space-y-6">
+            <div class="inline-block px-3 py-1 text-xs font-bold tracking-widest text-neonPink uppercase bg-neonPink/10 rounded-full border border-neonPink/20">
+                TikTok Production Plan
+            </div>
+            <h1 id="scriptTitle" class="text-3xl md:text-5xl font-extrabold tracking-tight text-white leading-tight editable-target" data-key="title">
+                ¿Los mariscos más grandes de Ecatepec? Traje a mi mamá a la joya: <span class="text-neonCyan">El Camarón Guasaveño</span>
+            </h1>
+            
+            <!-- Metadata Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="glass p-5 rounded-2xl border-l-4 border-l-neonCyan">
+                    <h3 class="text-xs font-bold tracking-widest text-neonCyan uppercase mb-1">Contexto</h3>
+                    <p class="text-sm opacity-80 editable-target" data-key="context">Daniel y su mamá asisten a la inauguración de una amplia marisquería en Ecatepec, destacando la decoración, las porciones sustanciosas y el excelente sazón.</p>
+                </div>
+                <div class="glass p-5 rounded-2xl border-l-4 border-l-neonPink">
+                    <h3 class="text-xs font-bold tracking-widest text-neonPink uppercase mb-1">Target</h3>
+                    <p class="text-sm opacity-80 editable-target" data-key="target">Jóvenes y adultos residentes de Ecatepec de Morelos que buscan opciones gastronómicas familiares con buena relación costo-beneficio.</p>
+                </div>
+                <div class="glass p-5 rounded-2xl border-l-4 border-l-white">
+                    <h3 class="text-xs font-bold tracking-widest text-white uppercase mb-1">POV</h3>
+                    <p class="text-sm opacity-80 editable-target" data-key="pov">Creador entusiasta y sociable que comparte con honestidad y alegría un nuevo descubrimiento local, resaltando la abundancia de los platillos.</p>
+                </div>
+                <div class="glass p-5 rounded-2xl border-l-4 border-l-neonPink flex flex-col justify-between">
+                    <h3 class="text-xs font-bold tracking-widest text-neutral-400 uppercase mb-1">Duración Estimada</h3>
+                    <p class="text-3xl font-extrabold text-neonPink editable-target" data-key="duration">55 seg</p>
+                </div>
+            </div>
+        </header>
 
-    <!-- Application Script -->
+        <!-- Section 1: Guía Rítmica (Roadmap Vertical Original) -->
+        <section>
+            <h2 class="text-2xl font-bold mb-8 text-white flex items-center gap-2">
+                <span class="w-2 h-7 bg-neonPink rounded-full"></span>
+                Guía Rítmica (Roadmap)
+            </h2>
+            <div class="relative pl-12 timeline-line space-y-8">
+                <!-- Segmento 1 -->
+                <div class="relative">
+                    <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-neonPink flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(254,44,85,0.5)]">01</div>
+                    <div class="glass p-6 rounded-2xl">
+                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                            <span class="text-xs font-mono bg-white/10 text-white px-2 py-0.5 rounded">0-7s</span>
+                            <h4 class="font-bold text-lg text-neonCyan editable-target" data-key="rhythm-t1">Segmento 1: El Gancho de la Jefa</h4>
+                        </div>
+                        <p class="text-sm opacity-70 editable-target" data-key="rhythm-d1">Daniel presenta el lugar con un plano del aguachile especial mientras su mamá reacciona con sorpresa al primer bocado.</p>
+                    </div>
+                </div>
+
+                <!-- Segmento 2 -->
+                <div class="relative">
+                    <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-neonCyan flex items-center justify-center font-bold text-bg shadow-[0_0_15px_rgba(37,244,238,0.5)]">02</div>
+                    <div class="glass p-6 rounded-2xl">
+                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                            <span class="text-xs font-mono bg-white/10 text-white px-2 py-0.5 rounded">7-15s</span>
+                            <h4 class="font-bold text-lg text-white editable-target" data-key="rhythm-t2">Segmento 2: El Spot y la Vibra</h4>
+                        </div>
+                        <p class="text-sm opacity-70 editable-target" data-key="rhythm-d2">Montaje rápido de las instalaciones amplias, la decoración del lugar y la enorme fila de gente que se formó al salir.</p>
+                    </div>
+                </div>
+
+                <!-- Segmento 3 -->
+                <div class="relative">
+                    <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-white flex items-center justify-center font-bold text-bg">03</div>
+                    <div class="glass p-6 rounded-2xl">
+                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                            <span class="text-xs font-mono bg-white/10 text-white px-2 py-0.5 rounded">15-28s</span>
+                            <h4 class="font-bold text-lg text-white editable-target" data-key="rhythm-t3">Segmento 3: Explosión de Sabor Dulce</h4>
+                        </div>
+                        <p class="text-sm opacity-70 editable-target" data-key="rhythm-d3">Acercamiento detallado a los camarones al coco con piña y cereza, describiendo la salsa espectacular mientras Daniel los prueba.</p>
+                    </div>
+                </div>
+
+                <!-- Segmento 4 -->
+                <div class="relative">
+                    <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-white flex items-center justify-center font-bold text-bg">04</div>
+                    <div class="glass p-6 rounded-2xl">
+                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                            <span class="text-xs font-mono bg-white/10 text-white px-2 py-0.5 rounded">28-40s</span>
+                            <h4 class="font-bold text-lg text-white editable-target" data-key="rhythm-t4">Segmento 4: Pulpo y Porciones Gigantes</h4>
+                        </div>
+                        <p class="text-sm opacity-70 editable-target" data-key="rhythm-d4">Muestra del pulpo al ajillo y cómo todos los platos apenas caben en la mesa debido a su tamaño sustancioso.</p>
+                    </div>
+                </div>
+
+                <!-- Segmento 5 -->
+                <div class="relative">
+                    <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-white flex items-center justify-center font-bold text-bg">05</div>
+                    <div class="glass p-6 rounded-2xl">
+                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                            <span class="text-xs font-mono bg-white/10 text-white px-2 py-0.5 rounded">40-50s</span>
+                            <h4 class="font-bold text-lg text-white editable-target" data-key="rhythm-t5">Segmento 5: La Verdad del Ticket</h4>
+                        </div>
+                        <p class="text-sm opacity-70 editable-target" data-key="rhythm-d5">Daniel desglosa la cuenta de 1017 pesos, explicando que es comida para tres personas y que la calidad-precio es un 10 de 10.</p>
+                    </div>
+                </div>
+
+                <!-- Segmento 6 -->
+                <div class="relative">
+                    <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-neonPink flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(254,44,85,0.5)]">06</div>
+                    <div class="glass p-6 rounded-2xl">
+                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                            <span class="text-xs font-mono bg-white/10 text-white px-2 py-0.5 rounded">50-55s</span>
+                            <h4 class="font-bold text-lg text-neonPink editable-target" data-key="rhythm-t6">Segmento 6: Cierre Informativo</h4>
+                        </div>
+                        <p class="text-sm opacity-70 editable-target" data-key="rhythm-d6">Recomendación final cámara en mano mencionando el valet parking e invitando a la gente de Ecatepec a conocerlo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Production Script Table -->
+        <section class="glass rounded-3xl overflow-hidden">
+            <div class="p-6 border-b border-borderSubtle">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                    <span class="w-2 h-7 bg-neonCyan rounded-full"></span>
+                    Script del Video (Producción)
+                </h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-black/40 border-b border-borderSubtle">
+                        <tr>
+                            <th class="p-4 text-xs uppercase font-bold text-neonCyan w-5/12">Guion / Audio</th>
+                            <th class="p-4 text-xs uppercase font-bold text-white w-2/12">Acotación</th>
+                            <th class="p-4 text-xs uppercase font-bold text-neonPink w-5/12">Tomas de Video</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-borderSubtle text-sm">
+                        <!-- Fila 1 -->
+                        <tr class="row-hover transition-colors">
+                            <td class="p-5 font-medium text-base leading-relaxed editable-target" data-key="row-1-audio">
+                                <strong class="text-neonCyan">Daniel:</strong> ¿Serán estos los mariscos más grandes de todo Ecatepec? Traje a mi jefa a conocer esta joya. ¡Ma, checa este aguachile!
+                            </td>
+                            <td class="p-5">
+                                <span class="px-2.5 py-1 text-xs font-mono bg-white/5 border border-white/10 rounded-lg text-neutral-300 editable-target" data-key="row-1-acot">[Agudo + Rápido + Alto]</span>
+                            </td>
+                            <td class="p-5 opacity-80 italic editable-target" data-key="row-1-visual">
+                                Primer plano (Close-up) del aguachile especial destacando los colores. Paneo lateral hacia la cara de la mamá.
+                            </td>
+                        </tr>
+
+                        <!-- Fila 2 -->
+                        <tr class="row-hover transition-colors">
+                            <td class="p-5 font-medium text-base leading-relaxed editable-target" data-key="row-2-audio">
+                                <strong class="text-neonPink">Mamá:</strong> ¡Wow, Daniel! Está enorme y se ve fresco, fresco. ¡Está riquísimo!
+                            </td>
+                            <td class="p-5">
+                                <span class="px-2.5 py-1 text-xs font-mono bg-white/5 border border-white/10 rounded-lg text-neutral-300 editable-target" data-key="row-2-acot">[Agudo + Medio + Alto]</span>
+                            </td>
+                            <td class="p-5 opacity-80 italic editable-target" data-key="row-2-visual">
+                                Primer plano de la mamá probando el bocado y haciendo un gesto de sorpresa y aprobación.
+                            </td>
+                        </tr>
+
+                        <!-- Fila 3 -->
+                        <tr class="row-hover transition-colors">
+                            <td class="p-5 font-medium text-base leading-relaxed editable-target" data-key="row-3-audio">
+                                <strong class="text-neonCyan">Daniel:</strong> Se llama El Camarón Guasaveño. El spot está increíble, súper amplio y decorado de diez. Pero ojo, que se llena cañón, miren la fila al salir.
+                            </td>
+                            <td class="p-5">
+                                <span class="px-2.5 py-1 text-xs font-mono bg-white/5 border border-white/10 rounded-lg text-neutral-300 editable-target" data-key="row-3-acot">[Medio + Rápido + Medio]</span>
+                            </td>
+                            <td class="p-5 opacity-80 italic editable-target" data-key="row-3-visual">
+                                Montaje rápido (Fast cuts) de las instalaciones decoradas, el letrero del lugar y una toma abierta de la fila de gente afuera.
+                            </td>
+                        </tr>
+
+                        <!-- Fila 4 -->
+                        <tr class="row-hover transition-colors">
+                            <td class="p-5 font-medium text-base leading-relaxed editable-target" data-key="row-4-audio">
+                                <strong class="text-neonCyan">Daniel:</strong> Ahora sí, lo que nos voló la cabeza: camarones al coco. Vienen con piña, cereza y una salsa dulce que es una joya. ¡Neta nunca había probado algo así!
+                            </td>
+                            <td class="p-5">
+                                <span class="px-2.5 py-1 text-xs font-mono bg-white/5 border border-white/10 rounded-lg text-neutral-300 editable-target" data-key="row-4-acot">[Agudo + Medio + Alto]</span>
+                            </td>
+                            <td class="p-5 opacity-80 italic editable-target" data-key="row-4-visual">
+                                Primerísimo primer plano (Extreme close-up) de los camarones al coco con piña y cereza. Toma de la salsa espesa cayendo sobre el plato.
+                            </td>
+                        </tr>
+
+                        <!-- Fila 5 -->
+                        <tr class="row-hover transition-colors">
+                            <td class="p-5 font-medium text-base leading-relaxed editable-target" data-key="row-5-audio">
+                                <strong class="text-neonCyan">Daniel:</strong> También probamos el pulpo al ajillo; el sabor a ajo es súper intenso, ¡delicioso! Y vean las porciones: los platos apenas caben en la mesa. Comen tres fácil.
+                            </td>
+                            <td class="p-5">
+                                <span class="px-2.5 py-1 text-xs font-mono bg-white/5 border border-white/10 rounded-lg text-neutral-300 editable-target" data-key="row-5-acot">[Medio + Medio + Medio]</span>
+                            </td>
+                            <td class="p-5 opacity-80 italic editable-target" data-key="row-5-visual">
+                                Plano medio de la mesa saturada de platos grandes. Acercamiento al pulpo humeante con trozos de ajo visibles.
+                            </td>
+                        </tr>
+
+                        <!-- Fila 6 -->
+                        <tr class="row-hover transition-colors">
+                            <td class="p-5 font-medium text-base leading-relaxed editable-target" data-key="row-6-audio">
+                                <strong class="text-neonCyan">Daniel:</strong> La hora de la verdad: el ticket. Pagamos 1017 pesos por todo este festín. Por la cantidad y el sazón, es un diez de diez indiscutible.
+                            </td>
+                            <td class="p-5">
+                                <span class="px-2.5 py-1 text-xs font-mono bg-white/5 border border-white/10 rounded-lg text-neutral-300 editable-target" data-key="row-6-acot">[Medio + Medio + Medio]</span>
+                            </td>
+                            <td class="p-5 opacity-80 italic editable-target" data-key="row-6-visual">
+                                Daniel a cámara sosteniendo la cuenta. Aparece un gráfico en pantalla con el texto "$1,017 MXN - 10/10".
+                            </td>
+                        </tr>
+
+                        <!-- Fila 7 -->
+                        <tr class="row-hover transition-colors">
+                            <td class="p-5 font-medium text-base leading-relaxed editable-target" data-key="row-7-audio">
+                                <strong class="text-neonCyan">Daniel:</strong> Tienen valet parking y están aquí en Ecatepec. Etiqueta a tu acompañante y lánzate a conocerlo. ¡Te va a encantar!
+                            </td>
+                            <td class="p-5">
+                                <span class="px-2.5 py-1 text-xs font-mono bg-white/5 border border-white/10 rounded-lg text-neutral-300 editable-target" data-key="row-7-acot">[Agudo + Rápido + Alto]</span>
+                            </td>
+                            <td class="p-5 opacity-80 italic editable-target" data-key="row-7-visual">
+                                Daniel hablando a cámara (POV) con el restaurante de fondo. Toma final del servicio de valet parking y Daniel dando un pulgar arriba.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Footer interactivo -->
+        <footer class="flex flex-col md:flex-row justify-between items-center gap-6 py-12 border-t border-borderSubtle">
+            <div class="flex items-center gap-4">
+                <span id="statusBadge" class="px-4 py-2 rounded-full bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 text-sm font-bold transition-all">
+                    Cargando...
+                </span>
+                <span class="text-sm opacity-50">Plan v1.0.0</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+                <button onclick="toggleComments()" class="px-5 py-3 rounded-xl border border-white/20 hover:bg-white/10 transition-all font-semibold text-sm flex items-center gap-2 text-white">
+                    <span>💬</span> Sugerir Cambios
+                </button>
+                <button onclick="toggleEditMode()" id="btnEdit" class="px-5 py-3 rounded-xl border border-neonCyan/40 text-neonCyan hover:bg-neonCyan/10 transition-all font-semibold text-sm flex items-center gap-2">
+                    <span>✏️</span> Realizar Cambios
+                </button>
+                <button onclick="approvePlan()" id="btnApprove" class="px-6 py-3 rounded-xl bg-neonPink hover:bg-rose-600 transition-all text-white font-semibold text-sm shadow-[0_0_20px_rgba(254,44,85,0.3)]">
+                    Aprobar Plan
+                </button>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Barra lateral de Comentarios -->
+    <aside id="commentsDrawer" class="fixed top-0 right-0 h-full w-full sm:w-96 glass bg-[#0F0F0F]/95 border-l border-borderSubtle p-6 translate-x-full transition-transform duration-300 z-50 flex flex-col justify-between shadow-2xl">
+        <div>
+            <div class="flex items-center justify-between pb-4 border-b border-borderSubtle">
+                <div class="flex items-center gap-2">
+                    <span class="text-neonCyan text-lg">💬</span>
+                    <h3 class="font-bold text-white text-base">Comentarios y Cambios</h3>
+                </div>
+                <button onclick="closeComments()" class="text-neutral-400 hover:text-white p-1 text-lg">✕</button>
+            </div>
+
+            <div class="mt-4 space-y-3">
+                <input id="commentAuthor" type="text" placeholder="Tu nombre" class="w-full glass px-3 py-2 rounded-xl text-xs text-white placeholder:text-neutral-600 focus:outline-none focus:border-neonCyan">
+                <textarea id="commentText" rows="4" placeholder="Escribe tu observación aquí..." class="w-full glass p-3 rounded-xl text-xs text-white focus:outline-none focus:border-neonCyan resize-none placeholder:text-neutral-600"></textarea>
+                <button onclick="saveCommentToSupabase()" id="btnAddComment" class="w-full py-2.5 rounded-xl bg-neonCyan text-black font-bold text-xs uppercase tracking-wider hover:opacity-90 transition">
+                    Publicar Comentario
+                </button>
+            </div>
+
+            <div class="mt-6">
+                <h4 class="text-xs uppercase tracking-widest text-neutral-400 font-bold mb-3">Observaciones Registradas</h4>
+                <div id="commentsList" class="space-y-3 overflow-y-auto max-h-72 pr-1">
+                    <p class="text-xs text-neutral-500">Cargando...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-4 border-t border-borderSubtle">
+            <button onclick="copyAllComments()" class="w-full py-2.5 rounded-xl border border-white/20 text-white hover:bg-white/10 text-xs font-semibold tracking-wider flex items-center justify-center gap-2 transition">
+                <span>📋</span> Copiar todas las notas
+            </button>
+        </div>
+    </aside>
+
+    <!-- Supabase Logic -->
     <script>
-        const SCRIPT_SLUG = 'tiktok-secreto-ecatepec';
         const SUPABASE_URL = 'https://rvzwttbazggsmlhubkdd.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_-g__jgzED6Nue5Lwan917w_rNrftw4j';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        const { createClient } = supabase;
-        const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+        const SCRIPT_SLUG = 'tiktok-camaron-mama-ecatepec';
 
         let isEditing = false;
-
-        // Elements
-        const btnEdit = document.getElementById('btnEdit');
-        const btnEditText = document.getElementById('btnEditText');
-        const btnApprove = document.getElementById('btnApprove');
         const statusBadge = document.getElementById('statusBadge');
-        const btnSuggest = document.getElementById('btnSuggest');
-        const btnCloseDrawer = document.getElementById('btnCloseDrawer');
+        const btnApprove = document.getElementById('btnApprove');
+        const btnEdit = document.getElementById('btnEdit');
+        const editAlert = document.getElementById('editAlert');
         const commentsDrawer = document.getElementById('commentsDrawer');
-        const drawerBackdrop = document.getElementById('drawerBackdrop');
-        const commentsList = document.getElementById('commentsList');
         const commentAuthor = document.getElementById('commentAuthor');
         const commentText = document.getElementById('commentText');
-        const btnSubmitComment = document.getElementById('btnSubmitComment');
+        const commentsList = document.getElementById('commentsList');
 
-        // Status update visual helper
-        function renderStatus(status) {
-            if (status === 'Aprobado') {
-                statusBadge.className = 'px-2.5 py-1 rounded-full text-xs font-mono font-medium tracking-wide border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.2)]';
-                statusBadge.textContent = 'Aprobado';
-            } else {
-                statusBadge.className = 'px-2.5 py-1 rounded-full text-xs font-mono font-medium tracking-wide border border-amber-500/30 bg-amber-500/10 text-amber-300';
-                statusBadge.textContent = 'En Revisión';
-            }
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchScriptData();
+            fetchComments();
+        });
 
-        // Load Persistent Content and Status
-        async function loadScriptData() {
+        async function fetchScriptData() {
             try {
-                const { data, error } = await db
+                const { data } = await supabaseClient
                     .from('script_status')
-                    .select('*')
+                    .select('status, content_data')
                     .eq('slug', SCRIPT_SLUG)
-                    .maybeSingle();
-
-                if (error) {
-                    console.warn('Error loading script status:', error);
-                    return;
-                }
+                    .single();
 
                 if (data) {
-                    if (data.status) {
-                        renderStatus(data.status);
-                    }
-                    if (data.content_data && typeof data.content_data === 'object') {
-                        Object.keys(data.content_data).forEach(key => {
+                    renderStatus(data.status || 'En Revisión');
+                    if (data.content_data) {
+                        for (const [key, val] of Object.entries(data.content_data)) {
                             const el = document.querySelector(`[data-key="${key}"]`);
-                            if (el) {
-                                el.innerText = data.content_data[key];
-                            }
-                        });
+                            if (el) el.innerHTML = val;
+                        }
                     }
+                } else {
+                    renderStatus('En Revisión');
                 }
             } catch (err) {
-                console.error('Fetch error:', err);
+                renderStatus('En Revisión');
             }
         }
 
-        // Toggle Editing Mode & Save to Supabase
-        async function toggleEditing() {
+        function renderStatus(status) {
+            if (status === 'Aprobado') {
+                statusBadge.textContent = '✓ Aprobado';
+                statusBadge.className = 'px-4 py-2 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-sm font-bold shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all';
+                btnApprove.textContent = 'Plan Aprobado';
+                btnApprove.className = 'px-6 py-3 rounded-xl bg-emerald-600 text-white font-semibold text-sm cursor-default';
+                btnApprove.disabled = true;
+            } else {
+                statusBadge.textContent = 'En Revisión';
+                statusBadge.className = 'px-4 py-2 rounded-full bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 text-sm font-bold transition-all';
+                btnApprove.textContent = 'Aprobar Plan';
+                btnApprove.className = 'px-6 py-3 rounded-xl bg-neonPink hover:bg-rose-600 transition-all text-white font-semibold text-sm shadow-[0_0_20px_rgba(254,44,85,0.3)]';
+                btnApprove.disabled = false;
+            }
+        }
+
+        async function approvePlan() {
+            btnApprove.textContent = 'Guardando...';
+            const { error } = await supabaseClient
+                .from('script_status')
+                .upsert({ slug: SCRIPT_SLUG, status: 'Aprobado' });
+
+            if (!error) renderStatus('Aprobado');
+        }
+
+        async function toggleEditMode() {
             isEditing = !isEditing;
             const targets = document.querySelectorAll('.editable-target');
+            
+            targets.forEach(el => {
+                el.contentEditable = isEditing;
+                el.classList.toggle('editable-active', isEditing);
+            });
 
             if (isEditing) {
-                document.body.classList.add('is-editing');
-                targets.forEach(el => el.setAttribute('contenteditable', 'true'));
-                btnEditText.textContent = 'Guardar Cambios';
-                btnEdit.classList.remove('bg-[#25F4EE]/10', 'text-[#25F4EE]');
-                btnEdit.classList.add('bg-emerald-500/20', 'text-emerald-300', 'border-emerald-500/40');
+                editAlert.classList.remove('hidden');
+                btnEdit.innerHTML = '<span>💾</span> Guardar Cambios';
+                btnEdit.classList.add('bg-neonCyan', 'text-black');
+                btnEdit.classList.remove('text-neonCyan');
+                openComments();
             } else {
-                document.body.classList.remove('is-editing');
-                targets.forEach(el => el.removeAttribute('contenteditable'));
-                btnEditText.textContent = 'Realizar Cambios';
-                btnEdit.classList.add('bg-[#25F4EE]/10', 'text-[#25F4EE]');
-                btnEdit.classList.remove('bg-emerald-500/20', 'text-emerald-300', 'border-emerald-500/40');
-
-                // Collect content dictionary
+                editAlert.classList.add('hidden');
+                btnEdit.innerHTML = '<span>⏳</span> Guardando...';
+                
                 const contentData = {};
                 targets.forEach(el => {
                     const key = el.getAttribute('data-key');
-                    if (key) {
-                        contentData[key] = el.innerText.trim();
-                    }
+                    if (key) contentData[key] = el.innerHTML;
                 });
 
-                // Persist into script_status
-                try {
-                    const { error } = await db
-                        .from('script_status')
-                        .upsert({
-                            slug: SCRIPT_SLUG,
-                            content_data: contentData,
-                            updated_at: new Date().toISOString()
-                        }, { onConflict: 'slug' });
-
-                    if (error) {
-                        console.error('Save failed:', error);
-                    }
-                } catch (e) {
-                    console.error('Exception saving content:', e);
-                }
-            }
-        }
-
-        // Approve Plan Action
-        async function approvePlan() {
-            try {
-                const { error } = await db
+                await supabaseClient
                     .from('script_status')
-                    .upsert({
-                        slug: SCRIPT_SLUG,
-                        status: 'Aprobado',
-                        updated_at: new Date().toISOString()
-                    }, { onConflict: 'slug' });
+                    .upsert({ slug: SCRIPT_SLUG, content_data: contentData });
 
-                if (!error) {
-                    renderStatus('Aprobado');
-                } else {
-                    console.error('Approval failed:', error);
-                }
-            } catch (e) {
-                console.error('Exception approving:', e);
+                btnEdit.innerHTML = '<span>✏️</span> Realizar Cambios';
+                btnEdit.classList.remove('bg-neonCyan', 'text-black');
+                btnEdit.classList.add('text-neonCyan');
             }
         }
 
-        // Drawer Controls
-        function openDrawer() {
-            commentsDrawer.classList.remove('translate-x-full');
-            drawerBackdrop.classList.remove('hidden');
-            loadComments();
-        }
+        function toggleComments() { commentsDrawer.classList.toggle('translate-x-full'); }
+        function openComments() { commentsDrawer.classList.remove('translate-x-full'); }
+        function closeComments() { commentsDrawer.classList.add('translate-x-full'); }
 
-        function closeDrawer() {
-            commentsDrawer.classList.add('translate-x-full');
-            drawerBackdrop.classList.add('hidden');
-        }
+        async function fetchComments() {
+            const { data } = await supabaseClient
+                .from('script_comments')
+                .select('*')
+                .eq('slug', SCRIPT_SLUG)
+                .order('id', { ascending: false });
 
-        // Load Comments
-        async function loadComments() {
-            try {
-                const { data, error } = await db
-                    .from('script_comments')
-                    .select('*')
-                    .eq('slug', SCRIPT_SLUG)
-                    .order('created_at', { ascending: false });
+            if (!data || data.length === 0) {
+                commentsList.innerHTML = '<p class="text-xs text-neutral-500 italic">No hay observaciones aún.</p>';
+                return;
+            }
 
-                if (error) {
-                    commentsList.innerHTML = `<div class="text-xs text-rose-400 font-mono text-center py-4">Error al cargar sugerencias.</div>`;
-                    return;
-                }
-
-                if (!data || data.length === 0) {
-                    commentsList.innerHTML = `<div class="text-xs text-zinc-500 font-mono text-center py-8">No hay sugerencias registradas. ¡Sé el primero en aportar!</div>`;
-                    return;
-                }
-
-                commentsList.innerHTML = data.map(item => `
-                    <div class="glass-panel-subtle p-3 rounded-xl border border-white/5 space-y-1">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-semibold text-[#25F4EE]">${item.author || 'Anónimo'}</span>
-                            <span class="text-[10px] text-zinc-500 font-mono">${new Date(item.created_at).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}</span>
-                        </div>
-                        <p class="text-xs text-zinc-300 leading-relaxed">${item.comment}</p>
+            commentsList.innerHTML = '';
+            data.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'glass p-3 rounded-xl border border-white/10 text-xs space-y-1';
+                div.innerHTML = `
+                    <div class="flex justify-between items-center text-[10px] text-neutral-400">
+                        <span class="text-neonCyan font-bold">${escapeHtml(item.author || 'Colaborador')}</span>
+                        <span>${new Date(item.created_at).toLocaleDateString()}</span>
                     </div>
-                `).join('');
-            } catch (e) {
-                console.error('Comments fetch exception:', e);
-            }
+                    <p class="text-neutral-200">${escapeHtml(item.content)}</p>
+                `;
+                commentsList.appendChild(div);
+            });
         }
 
-        // Submit Comment
-        async function submitComment() {
-            const author = commentAuthor.value.trim() || 'Daniel (Creador)';
-            const comment = commentText.value.trim();
+        async function saveCommentToSupabase() {
+            const text = commentText.value.trim();
+            const author = commentAuthor.value.trim() || 'Colaborador';
+            if (!text) return;
 
-            if (!comment) return;
+            await supabaseClient
+                .from('script_comments')
+                .insert([{ slug: SCRIPT_SLUG, author: author, content: text }]);
 
-            btnSubmitComment.disabled = true;
-            btnSubmitComment.textContent = 'Enviando...';
-
-            try {
-                const { error } = await db
-                    .from('script_comments')
-                    .insert([{
-                        slug: SCRIPT_SLUG,
-                        author: author,
-                        comment: comment
-                    }]);
-
-                if (!error) {
-                    commentText.value = '';
-                    await loadComments();
-                } else {
-                    console.error('Error posting comment:', error);
-                }
-            } catch (e) {
-                console.error('Exception submitting comment:', e);
-            } finally {
-                btnSubmitComment.disabled = false;
-                btnSubmitComment.textContent = 'Publicar Sugerencia';
-            }
+            commentText.value = '';
+            fetchComments();
         }
 
-        // Wire Event Listeners
-        btnEdit.addEventListener('click', toggleEditing);
-        btnApprove.addEventListener('click', approvePlan);
-        btnSuggest.addEventListener('click', openDrawer);
-        btnCloseDrawer.addEventListener('click', closeDrawer);
-        drawerBackdrop.addEventListener('click', closeDrawer);
-        btnSubmitComment.addEventListener('click', submitComment);
+        function copyAllComments() {
+            const notes = Array.from(commentsList.querySelectorAll('p')).map(p => '• ' + p.innerText).join('\n');
+            if (!notes || notes.includes('No hay observaciones')) return;
+            navigator.clipboard.writeText(notes);
+            alert('¡Notas copiadas!');
+        }
 
-        // Initial Data Hydration
-        loadScriptData();
+        function escapeHtml(s) {
+            const div = document.createElement('div');
+            div.innerText = s;
+            return div.innerHTML;
+        }
     </script>
 </body>
 </html>

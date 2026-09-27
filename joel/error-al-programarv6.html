@@ -1,328 +1,65 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketing Production Brief - Executive Review</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+async function toggleEditMode() {
+    isEditing = !isEditing;
+    const targets = document.querySelectorAll('.editable-target');
     
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                    colors: {
-                        background: '#0F0F0F',
-                        glass: 'rgba(255, 255, 255, 0.03)',
-                        borderSubtle: 'rgba(255, 255, 255, 0.1)',
-                        neonPink: '#FE2C55',
-                        neonCyan: '#25F4EE',
-                        primary: '#FE2C55',
-                        slateDark: '#FFFFFF',
-                        bgLight: '#0F0F0F',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0F0F0F; color: #FFFFFF; }
-        .glass-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .editable-target[contenteditable="true"] { outline: 2px dashed #25F4EE; padding: 2px 4px; border-radius: 4px; }
-    </style>
-</head>
-<body class="text-white min-h-screen py-10 px-4 md:px-8">
+    targets.forEach(el => {
+        el.contentEditable = isEditing;
+        el.classList.toggle('editable-active', isEditing);
+    });
 
-    <div class="max-w-6xl mx-auto space-y-12">
+    if (isEditing) {
+        editAlert.classList.remove('hidden');
+        btnEdit.innerHTML = '<span>💾</span> Guardar Cambios';
+        btnEdit.classList.add('bg-neonCyan', 'text-black');
+        btnEdit.classList.remove('text-neonCyan');
+        openComments();
+    } else {
+        editAlert.classList.add('hidden');
+        btnEdit.innerHTML = '<span>⏳</span> Guardando...';
         
-        <!-- Header -->
-        <header class="text-center space-y-4">
-            <div class="flex justify-between items-center mb-2">
-                <a href="../index.html?folder=joel" class="text-xs font-semibold text-neonCyan hover:underline flex items-center gap-1">&larr; Volver al panel de Joel</a>
-                <span class="inline-block px-3 py-1 text-xs font-bold tracking-widest text-neonCyan uppercase bg-cyan-950/40 border border-neonCyan/30 rounded-full">TikTok Production Plan</span>
-            </div>
-            <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white leading-tight editable-target" data-key="title">
-                3 errores que cometes al querer aprender a programar desde cero
-            </h1>
-        </header>
-
-        <!-- Strategy Overview -->
-        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="glass-card p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border-l-4 border-l-neonCyan">
-                <h3 class="text-xs font-bold tracking-wider text-slate-400 mb-2">CONTEXTO</h3>
-                <p class="text-sm editable-target" data-key="context">Joel detecta que muchas personas entran a programar creyendo que es fácil o que solo trata de crear videojuegos y webs, chocando con la exigencia real de lógica, tiempo y matemáticas.</p>
-            </div>
-            <div class="glass-card p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border-l-4 border-l-neonPink">
-                <h3 class="text-xs font-bold tracking-wider text-slate-400 mb-2">TARGET</h3>
-                <p class="text-sm editable-target" data-key="target">Personas en México sin experiencia técnica que buscan aprender a programar desde cero y evalúan si ingresar a una carrera o bootcamp.</p>
-            </div>
-            <div class="glass-card p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border-l-4 border-l-white">
-                <h3 class="text-xs font-bold tracking-wider text-slate-400 mb-2">POV</h3>
-                <p class="text-sm editable-target" data-key="pov">Orientación preventiva, honesta y transparente desde la mirada sensata y calmada de Joel: aterrizar expectativas sin desanimar a los aspirantes.</p>
-            </div>
-            <div class="glass-card p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow border-l-4 border-l-neonCyan">
-                <h3 class="text-xs font-bold tracking-wider text-slate-400 mb-2">DURACIÓN TOTAL</h3>
-                <p class="text-2xl font-bold text-neonCyan editable-target" data-key="duration">55 segundos</p>
-            </div>
-        </section>
-
-        <!-- Pacing Roadmap -->
-        <section class="space-y-6">
-            <h2 class="text-xl font-semibold uppercase tracking-wider text-white">Guía Rítmica (Roadmap)</h2>
-            <div class="space-y-3 pl-8 relative">
-                <!-- Parsed segments -->
-                <div class="glass-card p-4 rounded-xl flex items-center gap-4 relative">
-                    <div class="absolute -left-[45px] top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-neonPink text-black flex items-center justify-center font-bold text-xs shadow-lg">01</div>
-                    <span class="text-xs font-mono bg-pink-950/50 text-neonPink border border-neonPink/30 px-2 py-1 rounded">00-07 seg</span>
-                    <strong class="text-sm font-semibold">El Gancho Realista</strong>
-                    <span class="text-sm text-slate-300">Joel a cámara rompe el mito: la razón principal por la que la gente abandona programación no es la falta de talento, sino entrar con ideas falsas.</span>
-                </div>
-                <div class="glass-card p-4 rounded-xl flex items-center gap-4 relative">
-                    <div class="absolute -left-[45px] top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-neonCyan text-black flex items-center justify-center font-bold text-xs shadow-lg">02</div>
-                    <span class="text-xs font-mono bg-cyan-950/50 text-neonCyan border border-neonCyan/30 px-2 py-1 rounded">07-18 seg</span>
-                    <strong class="text-sm font-semibold">Error 1: El Mito Gamer</strong>
-                    <span class="text-sm text-slate-300">Explicar la confusión entre jugar videojuegos y programar software, mostrando que la industria abarca IA, nube y ciberseguridad.</span>
-                </div>
-                <div class="glass-card p-4 rounded-xl flex items-center gap-4 relative">
-                    <div class="absolute -left-[45px] top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white text-black flex items-center justify-center font-bold text-xs shadow-lg">03</div>
-                    <span class="text-xs font-mono bg-slate-800 text-white border border-white/30 px-2 py-1 rounded">18-29 seg</span>
-                    <strong class="text-sm font-semibold">Error 2: Reducirlo a Sitios Web</strong>
-                    <span class="text-sm text-slate-300">Desmontar la idea de que programar es solo mover botones en HTML, visibilizando la arquitectura de datos y la infraestructura técnica.</span>
-                </div>
-                <div class="glass-card p-4 rounded-xl flex items-center gap-4 relative">
-                    <div class="absolute -left-[45px] top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-neonPink text-black flex items-center justify-center font-bold text-xs shadow-lg">04</div>
-                    <span class="text-xs font-mono bg-pink-950/50 text-neonPink border border-neonPink/30 px-2 py-1 rounded">29-41 seg</span>
-                    <strong class="text-sm font-semibold">Error 3: Subestimar la Lógica</strong>
-                    <span class="text-sm text-slate-300">Explicar que programar no es teclear rápido, sino razonamiento abstracto, pensamiento matemático estructurado y resolución de problemas.</span>
-                </div>
-                <div class="glass-card p-4 rounded-xl flex items-center gap-4 relative">
-                    <div class="absolute -left-[45px] top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-neonCyan text-black flex items-center justify-center font-bold text-xs shadow-lg">05</div>
-                    <span class="text-xs font-mono bg-cyan-950/50 text-neonCyan border border-neonCyan/30 px-2 py-1 rounded">41-48 seg</span>
-                    <strong class="text-sm font-semibold">El Enfoque Preventivo</strong>
-                    <span class="text-sm text-slate-300">Joel aclara con honestidad que no se trata de desmotivar, sino de cuidar la inversión de tiempo y dinero antes de tomar una decisión.</span>
-                </div>
-                <div class="glass-card p-4 rounded-xl flex items-center gap-4 relative">
-                    <div class="absolute -left-[45px] top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white text-black flex items-center justify-center font-bold text-xs shadow-lg">06</div>
-                    <span class="text-xs font-mono bg-slate-800 text-white border border-white/30 px-2 py-1 rounded">48-55 seg</span>
-                    <strong class="text-sm font-semibold">Llamado a la Reflexión</strong>
-                    <span class="text-sm text-slate-300">Cierre conversacional invitando a la audiencia a compartir cuál era su mayor expectativa antes de conocer este mundo.</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Production Table -->
-        <section class="space-y-6">
-            <h2 class="text-xl font-semibold uppercase tracking-wider text-white">Script del Video</h2>
-            <div class="overflow-x-auto glass-card rounded-2xl">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-white/5 border-b border-borderSubtle">
-                            <th class="p-4 text-xs uppercase font-bold text-neonCyan w-2/5">Audio / Locución</th>
-                            <th class="p-4 text-xs uppercase font-bold text-slate-400 w-1/5">Acotación</th>
-                            <th class="p-4 text-xs uppercase font-bold text-neonPink w-2/5">Visuales / Tomas de Video</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-borderSubtle text-sm">
-                        <tr>
-                            <td class="p-4 font-medium text-white"><span class="text-neonCyan font-bold">Joel:</span> Mucha gente que quiere empezar a programar abandona en las primeras semanas... y no es por falta de talento, sino por estas tres ideas equivocadas.</td>
-                            <td class="p-4"><span class="px-2 py-1 text-[10px] font-mono bg-slate-800 border border-slate-700 text-neonCyan rounded">[Reflexivo + Medio + Normal]</span></td>
-                            <td class="p-4 text-slate-300">Plano medio de Joel mirando a cámara, fondo de setup de trabajo tranquilo. Aparece texto en pantalla: <strong class="text-neonPink">"¿Por qué el 80% lo deja?"</strong></td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 font-medium text-white"><span class="text-neonCyan font-bold">Joel:</span> Número uno: creer que es solo hacer videojuegos. Que te gusten los juegos no significa que disfrutes optimizar físicas o lidiar con memoria. El software real está en automatización, datos y ciberseguridad.</td>
-                            <td class="p-4"><span class="px-2 py-1 text-[10px] font-mono bg-slate-800 border border-slate-700 text-neonPink rounded">[Amigable + Medio + Normal]</span></td>
-                            <td class="p-4 text-slate-300">Close-up ligero. Inserto B-roll en pantalla dividida: gameplay rápido vs consola de terminal ejecutando scripts de servidores.</td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 font-medium text-white"><span class="text-neonCyan font-bold">Joel:</span> Dos: pensar que solo es armar páginas web básicas. Diseñar un botón bonito es solo la punta del iceberg; abajo hay arquitecturas complejas, bases de datos y sistemas que sostienen todo.</td>
-                            <td class="p-4"><span class="px-2 py-1 text-[10px] font-mono bg-slate-800 border border-slate-700 text-white rounded">[Firme + Desacelerar + Normal]</span></td>
-                            <td class="p-4 text-slate-300">Joel gesticula con calma. Gráfico superpuesto que muestra la silueta de un iceberg: arriba "Página web", abajo "Bases de datos y servidores".</td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 font-medium text-white"><span class="text-neonCyan font-bold">Joel:</span> Y tres: subestimar el pensamiento lógico. Esto no es memorizar comandos de memoria; es resolver problemas abstractos y estructurar soluciones con matemáticas y mucha paciencia.</td>
-                            <td class="p-4"><span class="px-2 py-1 text-[10px] font-mono bg-slate-800 border border-slate-700 text-neonCyan rounded">[Analítico + Lento + Normal]</span></td>
-                            <td class="p-4 text-slate-300">Corte a plano más cerrado de Joel, postura sensata y sincera. Text highlight en pantalla: <strong class="text-neonCyan">"Lógica y análisis > Código de memoria"</strong>.</td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 font-medium text-white"><span class="text-neonCyan font-bold">Joel:</span> No te lo digo para desanimarte, sino para que no gastes tiempo o dinero a ciegas. Si vas a entrar, que sea conociendo el terreno de verdad.</td>
-                            <td class="p-4"><span class="px-2 py-1 text-[10px] font-mono bg-slate-800 border border-slate-700 text-neonPink rounded">[Cercano + Medio + Quedito]</span></td>
-                            <td class="p-4 text-slate-300">Plano medio frontal. Joel sonríe de forma sutil, transmitiendo confianza y empatía genuina.</td>
-                        </tr>
-                        <tr>
-                            <td class="p-4 font-medium text-white"><span class="text-neonCyan font-bold">Joel:</span> ¿Cuál de estas tres cosas creías tú antes de investigar sobre programación? Te leo en los comentarios.</td>
-                            <td class="p-4"><span class="px-2 py-1 text-[10px] font-mono bg-slate-800 border border-slate-700 text-white rounded">[Casual + Medio + Normal]</span></td>
-                            <td class="p-4 text-slate-300">Joel señala ligeramente abajo. Icono dinámico de caja de comentarios con sticker de pregunta: "¿Cuál era tu expectativa?".</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="pt-10 mt-10 border-t border-borderSubtle flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="text-xs text-slate-400">
-                Brief generado el <span id="date"></span>
-            </div>
-            <div class="flex items-center gap-3">
-                <button onclick="toggleComments()" class="px-4 py-2 text-sm font-semibold rounded-xl border border-borderSubtle bg-white/5 hover:bg-white/10 text-white transition-all flex items-center gap-2">
-                    💬 Sugerir Cambios
-                </button>
-                <button onclick="toggleEditMode()" id="editBtn" class="px-4 py-2 text-sm font-semibold rounded-xl border border-borderSubtle bg-white/5 hover:bg-white/10 text-white transition-all flex items-center gap-2">
-                    ✏️ Realizar Cambios
-                </button>
-                <button onclick="approvePlan()" id="approveBtn" class="flex items-center gap-2 bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-4 py-2 rounded-xl font-bold text-sm shadow-sm hover:bg-emerald-500/30 transition-all">
-                    <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-                    Aprobar Plan
-                </button>
-            </div>
-        </footer>
-
-    </div>
-
-    <!-- Comments Drawer -->
-    <aside id="commentsDrawer" class="fixed top-0 right-0 w-80 md:w-96 h-full bg-[#141414] border-l border-borderSubtle p-6 transform translate-x-full transition-transform duration-300 ease-in-out z-50 flex flex-col shadow-2xl">
-        <div class="flex justify-between items-center pb-4 border-b border-borderSubtle">
-            <h3 class="text-base font-bold text-white flex items-center gap-2">💬 Comentarios</h3>
-            <button onclick="toggleComments()" class="text-slate-400 hover:text-white">&times;</button>
-        </div>
-        <div id="commentsList" class="flex-1 overflow-y-auto py-4 space-y-3 text-sm text-slate-300">
-            <p class="text-xs text-slate-500 italic">No hay comentarios aún en este brief.</p>
-        </div>
-        <div class="pt-4 border-t border-borderSubtle space-y-3">
-            <textarea id="commentInput" rows="3" placeholder="Escribe una sugerencia o feedback..." class="w-full bg-white/5 border border-borderSubtle rounded-xl p-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-neonCyan"></textarea>
-            <button onclick="saveCommentToSupabase()" class="w-full py-2 bg-neonCyan text-black font-semibold rounded-xl hover:opacity-90 transition-opacity text-sm">
-                Enviar Comentario
-            </button>
-        </div>
-    </aside>
-
-    <script>
-        const SCRIPT_SLUG = 'tres-errores-al-empezar-a-programar-joel';
-        const SUPABASE_URL = 'https://rvzwttbazggsmlhubkdd.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_-g__jgzED6Nue5Lwan917w_rNrftw4j';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-        let isEditing = false;
-
-        document.getElementById('date').innerText = new Date().toLocaleDateString('es-ES', { 
-            year: 'numeric', month: 'long', day: 'numeric' 
+        const contentData = {};
+        targets.forEach(el => {
+            const key = el.getAttribute('data-key');
+            if (key) contentData[key] = el.innerHTML;
         });
 
-        async function fetchScriptData() {
-            try {
-                const { data, error } = await supabaseClient
-                    .from('script_records')
-                    .select('*')
-                    .eq('slug', SCRIPT_SLUG)
-                    .single();
-                if (data && data.payload) {
-                    Object.keys(data.payload).forEach(key => {
-                        const el = document.querySelector(`[data-key="${key}"]`);
-                        if (el) el.innerText = data.payload[key];
-                    });
-                }
-                loadComments();
-            } catch (err) {
-                console.warn('Supabase fetch notice:', err);
-            }
+        const { error } = await supabaseClient
+            .from('script_status')
+            .upsert({ slug: SCRIPT_SLUG, content_data: contentData }, { onConflict: 'slug' });
+
+        if (error) {
+            console.error('Error al guardar cambios:', error);
+            alert('Error al guardar cambios: ' + error.message);
+        } else {
+            alert('¡Cambios guardados con éxito!');
         }
 
-        function toggleEditMode() {
-            isEditing = !isEditing;
-            const targets = document.querySelectorAll('.editable-target');
-            targets.forEach(el => el.setAttribute('contenteditable', isEditing));
-            const btn = document.getElementById('editBtn');
-            if (isEditing) {
-                btn.innerHTML = '💾 Guardar Cambios';
-                btn.classList.add('bg-neonCyan/20', 'border-neonCyan', 'text-neonCyan');
-            } else {
-                saveEditsToSupabase();
-                btn.innerHTML = '✏️ Realizar Cambios';
-                btn.classList.remove('bg-neonCyan/20', 'border-neonCyan', 'text-neonCyan');
-            }
-        }
+        btnEdit.innerHTML = '<span>✏️</span> Realizar Cambios';
+        btnEdit.classList.remove('bg-neonCyan', 'text-black');
+        btnEdit.classList.add('text-neonCyan');
+    }
+}
 
-        async function saveEditsToSupabase() {
-            const payload = {};
-            document.querySelectorAll('.editable-target').forEach(el => {
-                payload[el.getAttribute('data-key')] = el.innerText;
-            });
-            try {
-                await supabaseClient.from('script_records').upsert({
-                    slug: SCRIPT_SLUG,
-                    payload: payload,
-                    updated_at: new Date().toISOString()
-                });
-            } catch (err) {
-                console.error('Error saving edits:', err);
-            }
-        }
+async function saveCommentToSupabase() {
+    const text = commentText.value.trim();
+    const author = commentAuthor.value.trim() || 'Colaborador';
+    if (!text) return;
 
-        async function approvePlan() {
-            try {
-                await supabaseClient.from('script_approvals').upsert({
-                    slug: SCRIPT_SLUG,
-                    approved: true,
-                    approved_at: new Date().toISOString()
-                });
-                const btn = document.getElementById('approveBtn');
-                btn.innerHTML = '✅ Plan Aprobado';
-                btn.classList.replace('text-emerald-400', 'text-emerald-300');
-            } catch (err) {
-                console.error('Approval notice:', err);
-            }
-        }
+    btnAddComment.disabled = true;
+    btnAddComment.textContent = 'Publicando...';
 
-        function toggleComments() {
-            const drawer = document.getElementById('commentsDrawer');
-            drawer.classList.toggle('translate-x-full');
-        }
+    const { error } = await supabaseClient
+        .from('script_comments')
+        .insert([{ slug: SCRIPT_SLUG, author: author, content: text }]);
 
-        async function loadComments() {
-            try {
-                const { data } = await supabaseClient
-                    .from('script_comments')
-                    .select('*')
-                    .eq('slug', SCRIPT_SLUG)
-                    .order('created_at', { ascending: true });
-                if (data && data.length > 0) {
-                    const list = document.getElementById('commentsList');
-                    list.innerHTML = data.map(c => `
-                        <div class="p-3 rounded-lg bg-white/5 border border-borderSubtle">
-                            <p class="text-xs text-slate-400 mb-1">${new Date(c.created_at).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}</p>
-                            <p class="text-sm text-white">${c.comment}</p>
-                        </div>
-                    `).join('');
-                }
-            } catch (err) {
-                console.warn('Comments fetch notice:', err);
-            }
-        }
+    if (error) {
+        console.error('Error al guardar comentario:', error);
+        alert('Error al publicar comentario: ' + error.message);
+    } else {
+        commentText.value = '';
+        fetchComments();
+    }
 
-        async function saveCommentToSupabase() {
-            const input = document.getElementById('commentInput');
-            const comment = input.value.trim();
-            if (!comment) return;
-            try {
-                await supabaseClient.from('script_comments').insert({
-                    slug: SCRIPT_SLUG,
-                    comment: comment,
-                    created_at: new Date().toISOString()
-                });
-                input.value = '';
-                loadComments();
-            } catch (err) {
-                console.error('Error saving comment:', err);
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', fetchScriptData);
-    </script>
-</body>
-</html>
+    btnAddComment.disabled = false;
+    btnAddComment.textContent = 'Publicar Comentario';
+}

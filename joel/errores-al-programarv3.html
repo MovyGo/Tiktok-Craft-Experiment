@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brief de Producción TikTok - Tres errores al empezar a programar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        bgDark: '#0F0F0F',
+                        neonPink: '#FE2C55',
+                        neonCyan: '#25F4EE',
+                        subtleBorder: 'rgba(255, 255, 255, 0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #0F0F0F; 
+            color: #F3F4F6;
+        }
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(12px);
+        }
+        .timeline-line {
+            position: relative;
+        }
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            bottom: 24px;
+            left: 27px;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="min-h-screen py-10 px-4 md:px-8 text-slate-100">
+
+    <div class="max-w-6xl mx-auto space-y-12">
+        
+        <!-- Navigation Bar -->
+        <nav class="flex items-center justify-between border-b border-subtleBorder pb-4">
+            <a href="../index.html?folder=joel" class="text-xs font-semibold tracking-wider text-slate-400 hover:text-neonCyan transition-colors flex items-center gap-2">
+                <span>&larr;</span> VOLVER AL PANEL DE JOEL
+            </a>
+            <span class="text-xs font-mono text-slate-500 uppercase tracking-widest">TikTok Production Vault • Joel</span>
+        </nav>
+
+        <!-- Header -->
+        <header class="text-center space-y-4">
+            <span class="inline-block px-3 py-1 text-xs font-bold tracking-widest text-neonPink uppercase bg-pink-950/40 border border-neonPink/30 rounded-full">
+                TikTok Production Plan
+            </span>
+            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-white editable-target" data-key="main-title">
+                3 errores que cometes al querer aprender a programar (y por qué tantos abandonan)
+            </h1>
+        </header>
+
+        <!-- Strategy Overview -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="glass-card p-6 rounded-2xl border-l-4 border-l-neonCyan shadow-lg hover:border-l-neonCyan transition-all">
+                <h3 class="text-xs font-bold tracking-wider text-neonCyan mb-2 uppercase">Contexto</h3>
+                <p class="text-sm text-slate-300 leading-relaxed editable-target" data-key="meta-contexto">
+                    Joel nota una constante: aspirantes que creen que programar es fácil, rápido y solo hacer videojuegos o sitios web básicos, ignorando la dedicación real, la inversión en recursos y el pensamiento analítico necesario.
+                </p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl border-l-4 border-l-neonPink shadow-lg hover:border-l-neonPink transition-all">
+                <h3 class="text-xs font-bold tracking-wider text-neonPink mb-2 uppercase">Target</h3>
+                <p class="text-sm text-slate-300 leading-relaxed editable-target" data-key="meta-target">
+                    Personas en México sin experiencia previa en tecnología que desean aprender desarrollo de software desde cero o evalúan cambiarse de carrera sin frustrarse en el intento.
+                </p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl border-l-4 border-l-white shadow-lg hover:border-l-white transition-all">
+                <h3 class="text-xs font-bold tracking-wider text-slate-200 mb-2 uppercase">Punto de Vista (POV)</h3>
+                <p class="text-sm text-slate-300 leading-relaxed editable-target" data-key="meta-pov">
+                    Honesto, sensato y preventivo. No busca desanimar, sino evitar frustraciones y pérdidas de dinero alineando las expectativas con las exigencias intelectuales y prácticas del sector.
+                </p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl border-l-4 border-l-neonCyan shadow-lg">
+                <h3 class="text-xs font-bold tracking-wider text-slate-400 mb-2 uppercase">Duración Total</h3>
+                <p class="text-3xl font-extrabold text-neonCyan editable-target" data-key="meta-duracion">60 segundos</p>
+            </div>
+        </section>
+
+        <!-- Pacing Roadmap -->
+        <section class="space-y-6">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-bold uppercase tracking-wider text-white flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-neonCyan"></span>
+                    Guía Rítmica (Roadmap)
+                </h2>
+                <span class="text-xs text-slate-400 font-mono">Estructura de Retención Progresiva</span>
+            </div>
+
+            <div class="timeline-line space-y-4">
+                <!-- 01 Hook -->
+                <div class="glass-card p-4 rounded-xl flex items-start gap-4 relative z-10 hover:border-neonPink/40 transition-colors">
+                    <span class="bg-neonPink text-black font-extrabold px-3 py-1.5 rounded-lg text-sm shrink-0 shadow-md">01</span>
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono bg-pink-950/60 text-neonPink border border-neonPink/20 px-2 py-0.5 rounded">00-06 seg</span>
+                            <strong class="text-sm font-semibold text-white editable-target" data-key="node-title-1">El Gancho de Realidad</strong>
+                        </div>
+                        <p class="text-sm text-slate-300 editable-target" data-key="node-desc-1">
+                            Joel plantea con calma la ilusión generalizada del novato: pensar que programar se aprende en dos semanas y que es un camino fácil sin esfuerzo mental.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 02 Error 1 -->
+                <div class="glass-card p-4 rounded-xl flex items-start gap-4 relative z-10 hover:border-neonCyan/40 transition-colors">
+                    <span class="bg-neonCyan text-black font-extrabold px-3 py-1.5 rounded-lg text-sm shrink-0 shadow-md">02</span>
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono bg-cyan-950/60 text-neonCyan border border-neonCyan/20 px-2 py-0.5 rounded">06-18 seg</span>
+                            <strong class="text-sm font-semibold text-white editable-target" data-key="node-title-2">Error 1: Creer que solo son videojuegos o páginas web</strong>
+                        </div>
+                        <p class="text-sm text-slate-300 editable-target" data-key="node-desc-2">
+                            Desmitifica la idea reduccionista. El software real está en infraestructura, automatizaciones, ciberseguridad, arquitectura e inteligencia artificial.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 03 Error 2 -->
+                <div class="glass-card p-4 rounded-xl flex items-start gap-4 relative z-10 hover:border-white/40 transition-colors">
+                    <span class="bg-white text-black font-extrabold px-3 py-1.5 rounded-lg text-sm shrink-0 shadow-md">03</span>
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono bg-slate-800 text-slate-200 border border-slate-700 px-2 py-0.5 rounded">18-32 seg</span>
+                            <strong class="text-sm font-semibold text-white editable-target" data-key="node-title-3">Error 2: Subestimar la lógica y las matemáticas</strong>
+                        </div>
+                        <p class="text-sm text-slate-300 editable-target" data-key="node-desc-3">
+                            Aclara que programar no es memorizar comandos ni teclear bonito, sino sentarse a desmenuzar problemas abstractos con pensamiento estructurado.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 04 Error 3 -->
+                <div class="glass-card p-4 rounded-xl flex items-start gap-4 relative z-10 hover:border-neonPink/40 transition-colors">
+                    <span class="bg-neonPink text-black font-extrabold px-3 py-1.5 rounded-lg text-sm shrink-0 shadow-md">04</span>
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono bg-pink-950/60 text-neonPink border border-neonPink/20 px-2 py-0.5 rounded">32-44 seg</span>
+                            <strong class="text-sm font-semibold text-white editable-target" data-key="node-title-4">Error 3: Esperar resultados sin invertir tiempo ni cabeza</strong>
+                        </div>
+                        <p class="text-sm text-slate-300 editable-target" data-key="node-desc-4">
+                            Aborda el costo real: horas de prueba y error, inversión en formación de calidad y paciencia frente a la frustración técnica.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 05 Clímax / Propósito -->
+                <div class="glass-card p-4 rounded-xl flex items-start gap-4 relative z-10 hover:border-neonCyan/40 transition-colors">
+                    <span class="bg-neonCyan text-black font-extrabold px-3 py-1.5 rounded-lg text-sm shrink-0 shadow-md">05</span>
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono bg-cyan-950/60 text-neonCyan border border-neonCyan/20 px-2 py-0.5 rounded">44-53 seg</span>
+                            <strong class="text-sm font-semibold text-white editable-target" data-key="node-title-5">El Mensaje Preventivo</strong>
+                        </div>
+                        <p class="text-sm text-slate-300 editable-target" data-key="node-desc-5">
+                            Reafirma que el objetivo no es asustar ni cerrar puertas, sino entrar con los ojos abiertos para no abandonar al primer obstáculo.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 06 CTA -->
+                <div class="glass-card p-4 rounded-xl flex items-start gap-4 relative z-10 hover:border-white/40 transition-colors">
+                    <span class="bg-white text-black font-extrabold px-3 py-1.5 rounded-lg text-sm shrink-0 shadow-md">06</span>
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono bg-slate-800 text-slate-200 border border-slate-700 px-2 py-0.5 rounded">53-60 seg</span>
+                            <strong class="text-sm font-semibold text-white editable-target" data-key="node-title-6">Cierre & Conversación</strong>
+                        </div>
+                        <p class="text-sm text-slate-300 editable-target" data-key="node-desc-6">
+                            Llamado a la comunidad de forma tranquila y amigable preguntando cuál fue su mayor sorpresa al intentar escribir su primera línea de código.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Production Table -->
+        <section class="space-y-6">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-bold uppercase tracking-wider text-white flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-neonPink"></span>
+                    Script de Producción Detallado
+                </h2>
+                <span class="text-xs text-slate-400 font-mono">Tono: Auténtico, Sensato y Reflexivo</span>
+            </div>
+
+            <div class="overflow-x-auto glass-card rounded-2xl">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-white/5 border-b border-subtleBorder">
+                            <th class="p-4 text-xs uppercase font-extrabold text-neonCyan w-2/5 tracking-wider">Audio / Locución</th>
+                            <th class="p-4 text-xs uppercase font-extrabold text-slate-300 w-1/5 tracking-wider">Acotación Actuación</th>
+                            <th class="p-4 text-xs uppercase font-extrabold text-neonPink w-2/5 tracking-wider">Tomas de Video / Visuales</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-subtleBorder text-sm">
+                        <!-- Row 1 -->
+                        <tr class="hover:bg-white/[0.02] transition-colors">
+                            <td class="p-4 leading-relaxed font-normal text-slate-100">
+                                <span class="font-bold text-neonCyan">Joel:</span> 
+                                <span class="editable-target" data-key="script-audio-1">Mucha gente quiere aprender a programar pensando que en tres semanas van a crear el nuevo Minecraft... pero la tasa de abandono es altísima por tres errores muy puntuales.</span>
+                            </td>
+                            <td class="p-4 align-top">
+                                <span class="px-2.5 py-1 text-[11px] font-mono bg-white/10 text-cyan-300 rounded border border-cyan-500/30">
+                                    [Amigable + Medio + Normal]
+                                </span>
+                            </td>
+                            <td class="p-4 text-slate-400 leading-relaxed editable-target" data-key="script-video-1">
+                                <strong>Plano Medio:</strong> Joel sentado en su escritorio con su laptop, mirando a cámara de forma relajada y honesta. <br>
+                                <span class="text-neonPink text-xs font-mono">Texto en pantalla: "Por qué el 80% abandona al empezar a programar"</span>
+                            </td>
+                        </tr>
+
+                        <!-- Row 2 -->
+                        <tr class="hover:bg-white/[0.02] transition-colors">
+                            <td class="p-4 leading-relaxed font-normal text-slate-100">
+                                <span class="font-bold text-neonPink">Joel:</span> 
+                                <span class="editable-target" data-key="script-audio-2">El primer error es creer que programar es solo armar videojuegos o botones bonitos en una web. En la realidad, el software real vive en automatizar bases de datos, blindar ciberseguridad o entrenar modelos de IA. Es mucho más profundo de lo que se ve por fuera.</span>
+                            </td>
+                            <td class="p-4 align-top">
+                                <span class="px-2.5 py-1 text-[11px] font-mono bg-white/10 text-slate-200 rounded border border-white/20">
+                                    [Reflexivo + Medio + Normal]
+                                </span>
+                            </td>
+                            <td class="p-4 text-slate-400 leading-relaxed editable-target" data-key="script-video-2">
+                                <strong>Corte a Primer Plano:</strong> Joel gesticula con naturalidad. <br>
+                                <em>B-roll rápido:</em> Captura de pantalla de una terminal con scripts de automatización e infraestructura en lugar de una interfaz gráfica común. <br>
+                                <span class="text-neonPink text-xs font-mono">Badge: "Error 1: Reducirlo a videojuegos o páginas básicas"</span>
+                            </td>
+                        </tr>
+
+                        <!-- Row 3 -->
+                        <tr class="hover:bg-white/[0.02] transition-colors">
+                            <td class="p-4 leading-relaxed font-normal text-slate-100">
+                                <span class="font-bold text-neonCyan">Joel:</span> 
+                                <span class="editable-target" data-key="script-audio-3">El segundo error: subestimar la mente analítica. Escribir código no es teclear rápido como en las películas; es razonamiento lógico, descomponer un problema en partes mínimas y tener bases matemáticas sólidas. El 90% del trabajo es pensar y resolver, no teclear.</span>
+                            </td>
+                            <td class="p-4 align-top">
+                                <span class="px-2.5 py-1 text-[11px] font-mono bg-white/10 text-cyan-300 rounded border border-cyan-500/30">
+                                    [Firme + Pausado + Normal]
+                                </span>
+                            </td>
+                            <td class="p-4 text-slate-400 leading-relaxed editable-target" data-key="script-video-3">
+                                <strong>Ángulo Cenital / Detalle:</strong> Joel anotando un diagrama de flujo y nodos en una libreta con pluma, demostrando que resolver problemas empieza fuera de la pantalla. <br>
+                                <span class="text-neonCyan text-xs font-mono">Texto en pantalla: "No es escribir código. Es resolver lógica abstracta."</span>
+                            </td>
+                        </tr>
+
+                        <!-- Row 4 -->
+                        <tr class="hover:bg-white/[0.02] transition-colors">
+                            <td class="p-4 leading-relaxed font-normal text-slate-100">
+                                <span class="font-bold text-neonPink">Joel:</span> 
+                                <span class="editable-target" data-key="script-audio-4">Y el tercero es esperar resultados mágicos sin invertir tiempo ni tolerancia a la frustración. Un bug puede trabarte tres días seguidos, y si no estás listo para estudiar horas por tu cuenta, vas a sentir que esto no es para ti cuando en realidad solo requiere disciplina.</span>
+                            </td>
+                            <td class="p-4 align-top">
+                                <span class="px-2.5 py-1 text-[11px] font-mono bg-white/10 text-slate-200 rounded border border-white/20">
+                                    [Empático + Medio + Normal]
+                                </span>
+                            </td>
+                            <td class="p-4 text-slate-400 leading-relaxed editable-target" data-key="script-video-4">
+                                <strong>Plano Medio con ligera inclinación:</strong> Joel sonríe con empatía recordando lo frustrante que puede ser una pantalla de error en rojo. <br>
+                                <span class="text-neonPink text-xs font-mono">Gráfico sutil en pantalla: Icono de Debugging / Tiempo invertido</span>
+                            </td>
+                        </tr>
+
+                        <!-- Row 5 -->
+                        <tr class="hover:bg-white/[0.02] transition-colors">
+                            <td class="p-4 leading-relaxed font-normal text-slate-100">
+                                <span class="font-bold text-neonCyan">Joel:</span> 
+                                <span class="editable-target" data-key="script-audio-5">Ojo, no te digo esto para desanimarte. Al contrario: cuando entiendes de verdad a qué le estás tirando, dejas de frustrarte por las razones equivocadas y tomas mejores decisiones de estudio.</span>
+                            </td>
+                            <td class="p-4 align-top">
+                                <span class="px-2.5 py-1 text-[11px] font-mono bg-white/10 text-cyan-300 rounded border border-cyan-500/30">
+                                    [Cercano + Medio + Normal]
+                                </span>
+                            </td>
+                            <td class="p-4 text-slate-400 leading-relaxed editable-target" data-key="script-video-5">
+                                <strong>Primer Plano Íntimo:</strong> Joel se acerca ligeramente al lente, transmitiendo apoyo sincero y aterrizado. La iluminación resalta tonos cálidos sobre fondo neutro.
+                            </td>
+                        </tr>
+
+                        <!-- Row 6 -->
+                        <tr class="hover:bg-white/[0.02] transition-colors">
+                            <td class="p-4 leading-relaxed font-normal text-slate-100">
+                                <span class="font-bold text-neonPink">Joel:</span> 
+                                <span class="editable-target" data-key="script-audio-6">Si ya diste tus primeros pasos, ¿cuál fue ese golpe de realidad que más te sorprendió? Te leo aquí abajo.</span>
+                            </td>
+                            <td class="p-4 align-top">
+                                <span class="px-2.5 py-1 text-[11px] font-mono bg-white/10 text-pink-300 rounded border border-pink-500/30">
+                                    [Amigable + Medio + Normal]
+                                </span>
+                            </td>
+                            <td class="p-4 text-slate-400 leading-relaxed editable-target" data-key="script-video-6">
+                                <strong>Plano Medio:</strong> Joel asiente sonriendo de forma amigable e invita a comentar señalando sutilmente la caja de comentarios. <br>
+                                <span class="text-white text-xs font-mono">CTA: "Déjame tu experiencia en los comentarios 👇"</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="pt-8 border-t border-subtleBorder flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-xs text-slate-500">
+                Brief compilado para Joel • Fecha: <span id="generation-date" class="text-slate-400 font-mono"></span>
+            </div>
+            <div class="flex items-center gap-2 bg-white/5 border border-emerald-500/30 text-emerald-400 px-4 py-2 rounded-full font-semibold text-xs shadow-inner">
+                <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+                Guion Validado • Listo para Grabación
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        const SCRIPT_SLUG = 'tiktok-tres-errores-empezar-programar';
+        document.getElementById('generation-date').innerText = new Date().toLocaleDateString('es-MX', { 
+            year: 'numeric', month: 'long', day: 'numeric' 
+        });
+    </script>
+</body>
+</html>

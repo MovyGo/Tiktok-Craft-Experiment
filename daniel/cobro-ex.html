@@ -1,42 +1,85 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketing Production Brief - Executive Review</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <title>Marketing Production Dashboard | Factura Sexual Reddit</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
                     colors: {
-                        bgDark: '#0F0F0F',
+                        bg: '#0F0F0F',
+                        card: 'rgba(255, 255, 255, 0.03)',
                         neonPink: '#FE2C55',
                         neonCyan: '#25F4EE',
-                        borderSubtle: 'rgba(255, 255, 255, 0.1)',
+                        borderSubtle: 'rgba(255, 255, 255, 0.1)'
                     }
                 }
             }
         }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0F0F0F; color: #F8FAFC; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .editable-active { outline: 2px dashed #25F4EE; background: rgba(37, 244, 238, 0.05); }
+        body { font-family: 'Inter', sans-serif; background-color: #0F0F0F; color: #E5E5E5; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .timeline-line::before { content: ''; position: absolute; left: 19px; top: 0; bottom: 0; width: 2px; background: rgba(37, 244, 238, 0.3); z-index: 0; }
+        .row-hover:hover { background: rgba(255, 255, 255, 0.06); }
+        .editable-active { outline: 2px dashed #25F4EE; outline-offset: 4px; border-radius: 6px; cursor: text; }
     </style>
 </head>
-<body class="min-h-screen py-10 px-4 md:px-8">
+<body class="p-4 md:p-8 relative min-h-screen">
 
-    <div class="max-w-6xl mx-auto space-y-12">
-        
-        <!-- Header -->
-        <header class="text-center space-y-4">
-            <div class="flex
+    <!-- Navegación superior y aviso de edición -->
+    <div class="max-w-6xl mx-auto mb-6 flex flex-wrap items-center justify-between gap-3">
+        <a href="../index.html?folder=daniel" class="flex items-center gap-2 px-4 py-2 rounded-xl glass hover:bg-white/10 text-xs uppercase tracking-widest font-semibold text-white transition">
+            <span>←</span> Volver a la Carpeta
+        </a>
+        <div id="editAlert" class="hidden text-xs bg-neonCyan/10 border border-neonCyan/30 text-neonCyan px-3 py-1.5 rounded-lg flex items-center gap-2">
+            <span>✏️ Modo edición activo: Haz clic sobre cualquier texto para modificarlo.</span>
+        </div>
+    </div>
+
+    <main class="max-w-6xl mx-auto space-y-12">
+        <!-- Encabezado / Meta -->
+        <header class="space-y-6">
+            <div class="inline-block px-3 py-1 text-xs font-bold tracking-widest text-neonPink uppercase bg-neonPink/10 rounded-full border border-neonPink/20">
+                TikTok Production Plan • Daniel & Said
+            </div>
+            <h1 id="scriptTitle" class="text-3xl md:text-5xl font-extrabold tracking-tight text-white leading-tight editable-target" data-key="title">
+                ¿Me cobró $20,000 pesos por acostarse conmigo? La factura sexual más cara de Reddit
+            </h1>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="glass p-5 rounded-2xl border-l-4 border-l-neonCyan">
+                    <h3 class="text-xs font-bold tracking-widest text-neonCyan uppercase mb-1">Contexto</h3>
+                    <p class="text-sm opacity-80 editable-target" data-key="context">Un chico terminó con su novia tras dos meses intensos donde siempre usaron protección. Semanas después, ella le exige 20,000 pesos para realizarse análisis clínicos sexuales completos antes de iniciar con su nuevo novio, argumentando que él debe pagarlos por haber usado su cuerpo.</p>
+                </div>
+                <div class="glass p-5 rounded-2xl border-l-4 border-l-neonPink">
+                    <h3 class="text-xs font-bold tracking-widest text-neonPink uppercase mb-1">Target</h3>
+                    <p class="text-sm opacity-80 editable-target" data-key="target">Gente joven, usuarios de TikTok consumidores de chismes virales de pareja, debates morales de Reddit, dinámicas tóxicas y relaciones modernas.</p>
+                </div>
+                <div class="glass p-5 rounded-2xl border-l-4 border-l-white">
+                    <h3 class="text-xs font-bold tracking-widest text-white uppercase mb-1">POV</h3>
+                    <p class="text-sm opacity-80 editable-target" data-key="pov">Daniel y Said reaccionan en cámara: leen la confesión con tono morboso, picante, chistoso y polémico, analizando si es un cobro por despecho o si tiene sentido que el ex pague por el nuevo novio.</p>
+                </div>
+                <div class="glass p-5 rounded-2xl border-l-4 border-l-neonPink flex flex-col justify-between">
+                    <h3 class="text-xs font-bold tracking-widest text-neutral-400 uppercase mb-1">Duración Estimada</h3>
+                    <p class="text-3xl font-extrabold text-neonPink editable-target" data-key="duration">60s</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Guía Rítmica (Roadmap Vertical Oficial) -->
+        <section>
+            <h2 class="text-2xl font-bold mb-8 text-white flex items-center gap-2">
+                <span class="w-2 h-7 bg-neonPink rounded-full"></span>
+                Guía Rítmica (Roadmap)
+            </h2>
+            <div class="relative pl-12 timeline-line space-y-8">
+                <!-- 01 -->
+                <div class="relative">
+                    <div class="absolute -left-[45px] top-0 w-8 h-8 rounded-full bg-neonPink flex items-center justify-center font-
